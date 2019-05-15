@@ -47,10 +47,15 @@ Plug 'phpactor/phpactor'
 Plug 'neomake/neomake'
 Plug 'adoy/vim-php-refactoring-toolbox'
 Plug 'ludovicchabant/vim-gutentags'
+Plug 'bfredl/nvim-miniyank'
+Plug 'Shougo/denite.nvim'
+Plug 'easymotion/vim-easymotion'
+Plug 'flazz/vim-colorschemes'
 call plug#end()
 
 set laststatus=2
 set bg=dark
+colo gruvbox
 set go=a
 set mouse=a
 set nohlsearch
@@ -58,6 +63,32 @@ set clipboard=unnamedplus
 set scrolloff=7
 
 vnoremap <C-s> y:silent ! goldendict "<C-r>0" &<CR>
+nmap <C-s> :w<CR>
+nmap <C-q> :q<CR>
+nmap <C-x> :source .vimrc<CR>
+
+" miniyank
+	map p <Plug>(miniyank-autoput)
+	map P <Plug>(miniyank-autoPut)
+	map <leader>p <Plug>(miniyank-startput)
+	map <leader>P <Plug>(miniyank-startPut)
+	map <leader>n <Plug>(miniyank-cycle)
+	map <leader>N <Plug>(miniyank-cycleback)
+	map <Leader>c <Plug>(miniyank-tochar)
+	map <Leader>l <Plug>(miniyank-toline)
+	map <Leader>b <Plug>(miniyank-toblock)
+	map <Leader>d :Denite miniyank<CR>
+	let g:miniyank_filename = $HOME."/.miniyank.mpack"
+	map з <Plug>(miniyank-autoput)
+	map З <Plug>(miniyank-autoPut)
+	map <leader>з <Plug>(miniyank-startput)
+	map <leader>З <Plug>(miniyank-startPut)
+	map <leader>т <Plug>(miniyank-cycle)
+	map <leader>Т <Plug>(miniyank-cycleback)
+	map <Leader>с <Plug>(miniyank-tochar)
+	map <Leader>д <Plug>(miniyank-toline)
+	map <Leader>и <Plug>(miniyank-toblock)
+	map <Leader>в :Denite miniyank<CR>
 
 " ncm2
 	" enable ncm2 for all buffers
