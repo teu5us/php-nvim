@@ -64,6 +64,7 @@ set scrolloff=7
 
 vnoremap <C-s> y:silent ! goldendict "<C-r>0" &<CR>
 nmap <C-s> :w<CR>
+nmap <C-o> :e
 nmap <C-q> :q<CR>
 nmap <C-x> :source .vimrc<CR>
 
