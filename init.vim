@@ -11,11 +11,12 @@ call plug#begin('~/.config/nvim/plugged')
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-capslock'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-unimpaired'
 Plug 'jiangmiao/auto-pairs'
 Plug 'scrooloose/nerdtree'
 Plug 'junegunn/goyo.vim'
 Plug 'terryma/vim-multiple-cursors'
-Plug 'jreybert/vimagit'
 Plug 'LukeSmithxyz/vimling'
 Plug 'vimwiki/vimwiki'
 Plug 'bling/vim-airline'
@@ -48,27 +49,146 @@ Plug 'neomake/neomake'
 Plug 'adoy/vim-php-refactoring-toolbox'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'bfredl/nvim-miniyank'
-Plug 'Shougo/denite.nvim'
 Plug 'easymotion/vim-easymotion'
 Plug 'flazz/vim-colorschemes'
+Plug 'equalsraf/neovim-gui-shim'
+Plug 'mileszs/ack.vim'
+Plug 'moll/vim-bbye'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
+Plug 'junegunn/fzf.vim'
+Plug 'ncm2/ncm2-tern'
+Plug 'pangloss/vim-javascript'
+Plug 'sbdchd/neoformat'
 call plug#end()
 
 set laststatus=2
-set bg=dark
-" colo gruvbox
-colo bubblegum
+colo blazer
 set go=a
 set mouse=a
 set nohlsearch
 set clipboard=unnamedplus
 set scrolloff=7
 
-vnoremap <C-s> y:silent ! goldendict "<C-r>0" &<CR>
-nmap <C-s> :w<CR>
-nmap <C-o> :e
-nmap <C-q> :q<CR>
-nmap <C-x> :source .vimrc<CR>
-nnoremap Q /
+" theme switches
+nmap <leader>Tgr :colo gruvbox<CR>
+nmap <leader>Епк :colo gruvbox<CR>
+nmap <leader>Tbl :colo blazer<CR>
+nmap <leader>Еид :colo blazer<CR>
+nmap <leader>Tbu :colo bubblegum<CR>
+nmap <leader>Еиг :colo bubblegum<CR>
+nmap <leader>Tda :colo darkzen<CR>
+nmap <leader>Евф :colo darkzen<CR>
+
+vmap <leader>xt y:silent !goldendict "<C-r>0" &<CR>
+vmap <leader>че y:silent !goldendict "<C-r>0" &<CR>
+nmap <leader>fs :w<CR>
+nmap <leader>аы :w<CR>
+nmap <leader>fe :e<space>
+nmap <leader>ау :e<space>
+nmap <leader>ff :FzfFiles<CR>
+nmap <leader>аа :FzfFiles<CR>
+nmap <leader>fv :vs<space>
+nmap <leader>ам :vs<space>
+nmap <leader>ft :tabe<space>
+nmap <leader>ае :tabe<space>
+nmap <leader>qf :Bwipeout<CR>
+nmap <leader>йа :Bwipeout<CR>
+nmap <leader>fq :q<CR>
+nmap <leader>ай :q<CR>
+nmap <leader>qz :bufdo :Bdelete<CR>
+nmap <leader>йя :bufdo :Bdelete<CR>
+nmap <leader>qq :qa<CR>
+nmap <leader>йй :qa<CR>
+nmap <leader>fed :e ~/.vimrc<CR>
+nmap <leader>аув :e ~/.vimrc<CR>
+nmap <leader>feR :source ~/.vimrc<CR>
+nmap <leader>ауК :source ~/.vimrc<CR>
+nnoremap Q q
+nnoremap Й й
+nmap <leader>sf /
+nmap <leader>ыа /
+nmap <leader>sb ?
+nmap <leader>ыи ?
+nmap <leader>saf :Ack!  <c-r>%<c-b><S-Right><Right>''<Left>
+nmap <leader>ыфа :Ack!  <c-r>%<c-b><S-Right><Right>''<Left>
+nmap <leader>saw :AckWindow!  <c-r>%<c-b><S-Right><Right>''<Left>
+nmap <leader>ыфц :AckWindow!  <c-r>%<c-b><S-Right><Right>''<Left>
+nmap <leader>sff mq:FzfBLines<CR>
+nmap <leader>ыаа mq:FzfBLines<CR>
+nmap <leader>sfw mq:FzfLines<CR>
+nmap <leader>ыац mq:FzfLines<CR>
+nmap gb 'q
+nmap пи 'q
+nmap <leader>sr :reg<CR>
+nmap <leader>ык :reg<CR>
+nmap <leader>tw :set wrap<CR>
+nmap <leader>ец :set wrap<CR>
+nmap <leader>tW :set nowrap<CR>
+nmap <leader>еЦ :set nowrap<CR>
+nmap <leader>at :vs \| :terminal<CR>i
+nmap <leader>фе :vs \| :terminal<CR>i
+nmap <leader>atv :vs \| :terminal<CR>i
+nmap <leader>фем :vs \| :terminal<CR>i
+nmap <leader>ath :split \| :resize -12 \| :terminal<CR>i
+nmap <leader>фер :split \| :resize -12 \| :terminal<CR>i
+" nmap <leader>ao :vs \| :terminal opener-mac<CR>i
+" nmap <leader>фщ :vs \| :terminal opener-mac<CR>i
+nmap <leader>ao :vs \| :terminal open $(fzf)<CR>i
+nmap <leader>фщ :vs \| :terminal open $(fzf)<CR>i
+tnoremap <expr> <C-R> '<C-\><C-N>"'.nr2char(getchar()).'pi'
+nmap <leader>xc :FzfHistory:<CR>
+nmap <leader>xs :FzfHistory/<CR>
+nmap <leader>sm :FzfMarks<CR>
+nmap <leader>ac :FzfCommands<CR>
+imap fd <Esc>
+imap ав <Esc>
+
+if has('nvim')
+    tnoremap <C-e> <C-\><C-n>
+    au TermOpen  * setlocal norelativenumber nonumber
+    au TermClose * setlocal   relativenumber   number | exit
+endif
+
+" neoformat
+	let g:neoformat_enabled_python = ['yapf']
+	let g:neoformat_enabled_javascript = ['js-beautify']
+	let g:neoformat_enabled_html = ['html-beautify']
+	let g:neoformat_enabled_css = ['css-beautify']
+	let g:neoformat_enabled_c= ['uncrustify']
+	let g:neoformat_enabled_markdown= ['prettier']
+	let g:neoformat_enabled_vimwiki= ['remark', 'prettier', 'pandoc']
+
+" vim-javascript
+	let g:javascript_plugin_jsdoc = 1
+	let g:javascript_plugin_ngdoc = 1
+	let g:javascript_plugin_flow = 1
+	augroup javascript_folding
+    	au!
+    	au FileType javascript setlocal foldmethod=syntax
+	augroup END
+	map <leader>tjc :exec &conceallevel ? "set conceallevel=0" : "set conceallevel=1"<CR>
+	set conceallevel=0
+	let g:javascript_conceal_function             = "ƒ"
+	let g:javascript_conceal_null                 = "ø"
+	let g:javascript_conceal_this                 = "@"
+	let g:javascript_conceal_return               = "⇚"
+	let g:javascript_conceal_undefined            = "¿"
+	let g:javascript_conceal_NaN                  = "ℕ"
+	let g:javascript_conceal_prototype            = "¶"
+	let g:javascript_conceal_static               = "•"
+	let g:javascript_conceal_super                = "Ω"
+	let g:javascript_conceal_arrow_function       = "⇒"
+	let g:javascript_conceal_noarg_arrow_function = "🞅"
+	let g:javascript_conceal_underscore_arrow_function = "🞅"
+
+" fugitive
+	nmap <leader>ags :Gstatus<CR>
+	nmap <leader>agw :Gw<CR>
+	nmap <leader>agW :Gwq<CR>
+	nmap <leader>agdv :Gvdiff<CR>
+	nmap <leader>agds :Gsdiff<CR>
+	nmap <leader>agc :Gcommit<CR>
+	nmap <leader>agb :Gblame<CR>
 
 " miniyank
 	map p <Plug>(miniyank-autoput)
@@ -80,7 +200,6 @@ nnoremap Q /
 	map <Leader>c <Plug>(miniyank-tochar)
 	map <Leader>l <Plug>(miniyank-toline)
 	map <Leader>b <Plug>(miniyank-toblock)
-	map <Leader>d :Denite miniyank<CR>
 	let g:miniyank_filename = $HOME."/.miniyank.mpack"
 	map з <Plug>(miniyank-autoput)
 	map З <Plug>(miniyank-autoPut)
@@ -91,7 +210,59 @@ nnoremap Q /
 	map <Leader>с <Plug>(miniyank-tochar)
 	map <Leader>д <Plug>(miniyank-toline)
 	map <Leader>и <Plug>(miniyank-toblock)
-	map <Leader>в :Denite miniyank<CR>
+
+" fzf
+	let g:fzf_command_prefix = 'Fzf'
+	imap <c-x><c-k> <plug>(fzf-complete-word)
+	imap <c-x><c-f> <plug>(fzf-complete-path)
+	imap <c-x><c-j> <plug>(fzf-complete-file-ag)
+	imap <c-x><c-l> <plug>(fzf-complete-line)
+	autocmd! FileType fzf
+		autocmd  FileType fzf set laststatus=0 noshowmode noruler
+  		\| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
+
+	" Command for git grep
+	" - fzf#vim#grep(command, with_column, [options], [fullscreen])
+	command! -bang -nargs=* GGrep
+  	\ call fzf#vim#grep(
+  	\   'git grep --line-number '.shellescape(<q-args>), 0,
+  	\   { 'dir': systemlist('git rev-parse --show-toplevel')[0] }, <bang>0)
+
+	" Override Colors command. You can safely do this in your .vimrc as fzf.vim
+	" will not override existing commands.
+	command! -bang Colors
+  	\ call fzf#vim#colors({'left': '15%', 'options': '--reverse --margin 30%,0'}, <bang>0)
+
+	" Augmenting Ag command using fzf#vim#with_preview function
+	"   * fzf#vim#with_preview([[options], [preview window], [toggle keys...]])
+	"     * For syntax-highlighting, Ruby and any of the following tools are required:
+	"       - Bat: https://github.com/sharkdp/bat
+	"       - Highlight: http://www.andre-simon.de/doku/highlight/en/highlight.php
+	"       - CodeRay: http://coderay.rubychan.de/
+	"       - Rouge: https://github.com/jneen/rouge
+	"
+	"   :Ag  - Start fzf with hidden preview window that can be enabled with "?" key
+	"   :Ag! - Start fzf in fullscreen and display the preview window above
+	command! -bang -nargs=* Ag
+  	\ call fzf#vim#ag(<q-args>,
+  	\                 <bang>0 ? fzf#vim#with_preview('up:60%')
+  	\                         : fzf#vim#with_preview('right:50%:hidden', '?'),
+  	\                 <bang>0)
+
+	" Similarly, we can apply it to fzf#vim#grep. To use ripgrep instead of ag:
+	command! -bang -nargs=* Rg
+  	\ call fzf#vim#grep(
+  	\   'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
+  	\   <bang>0 ? fzf#vim#with_preview('up:60%')
+  	\           : fzf#vim#with_preview('right:50%:hidden', '?'),
+  	\   <bang>0)
+
+	" Likewise, Files command with preview window
+	command! -bang -nargs=? -complete=dir Files
+  	\ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+
+" ack.vim
+	let g:ackprg = 'ag --vimgrep'
 
 " gutentags
 	let g:gutentags_enabled=0
@@ -164,16 +335,19 @@ nnoremap Q /
 	autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
 " Goyo plugin makes text more readable when writing prose:
-	map <leader>f :Goyo \| set bg=dark \| set linebreak<CR>
+	map <leader>tg :Goyo \| set bg=dark \| set linebreak<CR>
+	map <leader>еп :Goyo \| set bg=dark \| set linebreak<CR>
 
 " Spell-check set to <leader>o, 'o' for 'orthography':
-	map <leader>o :setlocal spell! spelllang=en_us,ru_yo<CR>
+	map <leader>cs :setlocal spell! spelllang=en_us,ru_yo<CR>
+	map <leader>сы :setlocal spell! spelllang=en_us,ru_yo<CR>
 
 " Splits open at the bottom and right, which is non-retarded, unlike vim defaults.
 	set splitbelow splitright
 
 " Nerd tree
-	map <leader>F :NERDTreeToggle<CR>
+	map <leader>tf :NERDTreeToggle<CR>
+	map <leader>еа :NERDTreeToggle<CR>
 	autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 " vimling:
@@ -196,7 +370,8 @@ nnoremap Q /
 	map <C-l> <C-w>l
 
 " Check file in shellcheck:
-	map <leader>s :!clear && shellcheck %<CR>
+	map <leader>cS :!clear && shellcheck %<CR>
+	map <leader>сЫ :!clear && shellcheck %<CR>
 
 " Open my bibliography file in split
 	" map <leader>B :vsp<space>$BIB<CR>
@@ -206,12 +381,17 @@ nnoremap Q /
 	nnoremap S :%s//g<Left><Left>
 
 " Compile document, be it groff/LaTeX/markdown/etc.
-	" map <leader>c :w! \| !compiler <c-r>%<CR>
-	" map <leader>с :w! \| !compiler <c-r>%<CR>
+	map <leader>zcc :w! \| !compiler <c-r>%<CR>
+	map <leader>ясс :w! \| !compiler <c-r>%<CR>
+	map <leader>zcd :w! \| !compiler <c-r>% && convdoc <c-r>%<CR>
+	map <leader>ясв :w! \| !compiler <c-r>% && convdoc <c-r>%<CR>
+	map <leader>ad :!docspreview <c-r>%<CR><CR>
+	map <leader>фв :!docspreview <c-r>%<CR><CR>
+	" autocmd BufWritePost *.rmd :!compiler %
 
 " Open corresponding .pdf/.html or preview
-	" map <leader>p :!opout <c-r>%<CR><CR>
-	" map <leader>з :!opout <c-r>%<CR><CR>
+	map <leader>ap :!opout <c-r>%<CR><CR>
+	map <leader>фз :!opout <c-r>%<CR><CR>
 
 " Runs a script that cleans out tex build files whenever I close out of a .tex file.
 	autocmd VimLeave *.tex !texclear %
@@ -249,7 +429,7 @@ nnoremap Q /
 
 """LATEX
 	" Word count:
-	autocmd FileType tex map <leader>W :w !detex \| wc -w<CR>
+	" autocmd FileType tex map <leader>W :w !detex \| wc -w<CR>
 	" Code snippets
 	autocmd FileType tex inoremap ,fr \begin{frame}<Enter>\frametitle{}<Enter><Enter><++><Enter><Enter>\end{frame}<Enter><Enter><++><Esc>6kf}i
 	autocmd FileType tex inoremap ,fi \begin{fitch}<Enter><Enter>\end{fitch}<Enter><Enter><++><Esc>3kA
@@ -358,4 +538,3 @@ nnoremap Q /
 """.xml
 	autocmd FileType xml inoremap ,e <item><Enter><title><++></title><Enter><guid<space>isPermaLink="false"><++></guid><Enter><pubDate><Esc>:put<Space>=strftime('%a, %d %b %Y %H:%M:%S %z')<Enter>kJA</pubDate><Enter><link><++></link><Enter><description><![CDATA[<++>]]></description><Enter></item><Esc>?<title><enter>cit
 	autocmd FileType xml inoremap ,a <a href="<++>"><++></a><++><Esc>F"ci"
-
