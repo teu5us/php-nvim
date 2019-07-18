@@ -35,16 +35,25 @@ Plug 'ncm2/ncm2-ultisnips'
 Plug 'ncm2/ncm2-bufword'
 Plug 'ncm2/ncm2-path'
 Plug 'ncm2/ncm2-syntax'
+Plug 'ncm2/ncm2-neoinclude'
+Plug 'Shougo/neoinclude.vim'
+Plug 'ncm2/ncm2-tern'
 Plug 'yuki-ycino/ncm2-dictionary'
 Plug 'fgrsnau/ncm2-aspell'
 Plug 'fgrsnau/ncm2-otherbuf'
+Plug 'ncm2/ncm2-jedi'
+Plug 'ncm2/ncm2-tagprefix'
+Plug 'ncm2/ncm2-gtags'
+Plug 'jsfaint/gen_tags.vim'
+Plug 'ncm2/ncm2-html-subscope'
 Plug 'lervag/vimtex'
 Plug 'ncm2/ncm2-markdown-subscope'
 Plug 'StanAngeloff/php.vim'
 Plug 'rayburgemeestre/phpfolding.vim'
 Plug '2072/PHP-Indenting-for-VIm'
 Plug 'stephpy/vim-php-cs-fixer'
-Plug 'phpactor/phpactor'
+Plug 'phpactor/phpactor' ,  {'do': 'composer install', 'for': 'php'}
+Plug 'phpactor/ncm2-phpactor'
 Plug 'neomake/neomake'
 Plug 'adoy/vim-php-refactoring-toolbox'
 Plug 'ludovicchabant/vim-gutentags'
@@ -56,11 +65,12 @@ Plug 'mileszs/ack.vim'
 Plug 'moll/vim-bbye'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
-Plug 'ncm2/ncm2-tern'
 Plug 'pangloss/vim-javascript'
 Plug 'sbdchd/neoformat'
+Plug 'vim-scripts/indentpython.vim'
 call plug#end()
 
+set bg=dark
 set laststatus=2
 colo blazer
 set go=a
@@ -79,18 +89,41 @@ nmap <leader>Еиг :colo bubblegum<CR>
 nmap <leader>Tda :colo darkzen<CR>
 nmap <leader>Евф :colo darkzen<CR>
 
+" Dictionary
 vmap <leader>xt y:silent !goldendict "<C-r>0" &<CR>
 vmap <leader>че y:silent !goldendict "<C-r>0" &<CR>
-nmap <leader>fs :w<CR>
-nmap <leader>аы :w<CR>
-nmap <leader>fe :e<space>
-nmap <leader>ау :e<space>
+
+" Opening files
 nmap <leader>ff :FzfFiles<CR>
 nmap <leader>аа :FzfFiles<CR>
-nmap <leader>fv :vs<space>
-nmap <leader>ам :vs<space>
+nmap <leader>fh :FzfHistory<CR>
+nmap <leader>ар :FzfHistory<CR>
+nmap <leader>vs :vs<space>
+nmap <leader>мы :vs<space>
+nmap <leader>fe :e<space>
+nmap <leader>ау :e<space>
 nmap <leader>ft :tabe<space>
 nmap <leader>ае :tabe<space>
+
+" New bufs/tabs
+nmap <leader>w2 :vnew<space><CR>
+nmap <leader>ц2 :vnew<space><CR>
+nmap <leader>w3 :new<space><CR>
+nmap <leader>ц3 :new<space><CR>
+nmap <leader>w5 :tabnew<space><CR>
+nmap <leader>ц5 :tabnew<space><CR>
+
+" Moving/switching buffers
+nmap <leader>mv :vert sb<space>
+nmap <leader>ьм :vert sb<space>
+nmap <leader>ms :sb<space>
+nmap <leader>ьы :sb<space>
+nmap <leader>mt <C-w>T
+nmap <leader>ье <C-w>T
+
+" Saving/quitting
+nmap <leader>fs :w<CR>
+nmap <leader>аы :w<CR>
 nmap <leader>qf :Bwipeout<CR>
 nmap <leader>йа :Bwipeout<CR>
 nmap <leader>fq :q<CR>
@@ -99,16 +132,19 @@ nmap <leader>qz :bufdo :Bdelete<CR>
 nmap <leader>йя :bufdo :Bdelete<CR>
 nmap <leader>qq :qa<CR>
 nmap <leader>йй :qa<CR>
+
+" vimrc
 nmap <leader>fed :e ~/.vimrc<CR>
 nmap <leader>аув :e ~/.vimrc<CR>
 nmap <leader>feR :source ~/.vimrc<CR>
 nmap <leader>ауК :source ~/.vimrc<CR>
+
+" Command mode disabled
 nnoremap Q q
 nnoremap Й й
-nmap <leader>sf /
-nmap <leader>ыа /
-nmap <leader>sb ?
-nmap <leader>ыи ?
+
+" Searching
+nmap \ /
 nmap <leader>saf :Ack!  <c-r>%<c-b><S-Right><Right>''<Left>
 nmap <leader>ыфа :Ack!  <c-r>%<c-b><S-Right><Right>''<Left>
 nmap <leader>saw :AckWindow!  <c-r>%<c-b><S-Right><Right>''<Left>
@@ -121,32 +157,55 @@ nmap gb 'q
 nmap пи 'q
 nmap <leader>sr :reg<CR>
 nmap <leader>ык :reg<CR>
+nmap <leader>xc :FzfHistory:<CR>
+nmap <leader>чс :FzfHistory:<CR>
+nmap <leader>xs :FzfHistory/<CR>
+nmap <leader>чв :FzfHistory/<CR>
+nmap <leader>sm :FzfMarks<CR>
+nmap <leader>ыь :FzfMarks<CR>
+nmap <leader>ac :FzfCommands<CR>
+nmap <leader>фс :FzfCommands<CR>
+nmap <leader>sb :buffers<CR>:buf<C-b>
+nmap <leader>ыи :buffers<CR>:buf<C-b>
+nmap <leader>st :tabs<CR>
+nmap <leader>ые :tabs<CR>
+
+" Wrap toggles
 nmap <leader>tw :set wrap<CR>
 nmap <leader>ец :set wrap<CR>
 nmap <leader>tW :set nowrap<CR>
 nmap <leader>еЦ :set nowrap<CR>
-nmap <leader>at :vs \| :terminal<CR>i
-nmap <leader>фе :vs \| :terminal<CR>i
-nmap <leader>atv :vs \| :terminal<CR>i
-nmap <leader>фем :vs \| :terminal<CR>i
-nmap <leader>ath :split \| :resize -12 \| :terminal<CR>i
-nmap <leader>фер :split \| :resize -12 \| :terminal<CR>i
-" nmap <leader>ao :vs \| :terminal opener-mac<CR>i
-" nmap <leader>фщ :vs \| :terminal opener-mac<CR>i
-nmap <leader>ao :vs \| :terminal open $(fzf)<CR>i
-nmap <leader>фщ :vs \| :terminal open $(fzf)<CR>i
+
+" Apps
+nmap <leader>at :vs \| :terminal<CR>:file term<CR>:set  norelativenumber nonumber<CR>i
+nmap <leader>фе :vs \| :terminal<CR>:file term<CR>:set  norelativenumber nonumber<CR>i
+nmap <leader>atv :vs \| :terminal<CR>:file term<CR>:set  norelativenumber nonumber<CR>i
+nmap <leader>фем :vs \| :terminal<CR>:file term<CR>:set  norelativenumber nonumber<CR>i
+nmap <leader>ath :12split \| :terminal<CR>:file term<CR>:set  norelativenumber nonumber<CR>i
+nmap <leader>фер :12split \| :terminal<CR>:file term<CR>:set  norelativenumber nonumber<CR>i
+nmap <leader>ao :set splitright! \| :40vs \| :terminal opener1<CR>:file opener<CR>:set splitright<CR>i
+nmap <leader>фщ :set splitright! \| :40vs \| :terminal opener1<CR>:file opener<CR>:set splitright<CR>i
+tnoremap <C-q> <C-\><C-n>
 tnoremap <expr> <C-R> '<C-\><C-N>"'.nr2char(getchar()).'pi'
-nmap <leader>xc :FzfHistory:<CR>
-nmap <leader>xs :FzfHistory/<CR>
-nmap <leader>sm :FzfMarks<CR>
-nmap <leader>ac :FzfCommands<CR>
-imap fd <Esc>
-imap ав <Esc>
+nmap <leader>al :vs \| :terminal lynx duckduckgo.com<CR>i
+nmap <leader>фд :vs \| :terminal lynx duckduckgo.com<CR>i
+nmap <leader>ar :vs \| :terminal ranger<CR>i
+nmap <leader>фк :vs \| :terminal ranger<CR>i
+" nmap <leader>aR :vs \| :terminal ranger -r $HOME/.config/ranger_urxvt<CR>i
+" nmap <leader>фК :vs \| :terminal ranger -r $HOME/.config/ranger_urxvt<CR>i
+
+au BufEnter opener :vertical resize 40
+tnoremap <leader>ao <C-\><C-n>:q<CR>
+tnoremap <leader>фщ <C-\><C-n>:q<CR>
+
+"" PANDOC FOR PARSING WEBSITES
+nmap <leader>xp :%!pandoc -f html -t plain --wrap=none<CR>
+nmap <leader>xrp :e ++enc=cp1251<CR>\|:set fileencoding=utf8<CR>\|:%!pandoc -f html -t plain --wrap=none<CR>
+nmap <leader>xco :e ++enc=cp1251<CR>\|:set fileencoding=utf8<CR>d/<a\sstyle<CR>jdG:w\|:%!pandoc -f html -t plain --wrap=none<CR><CR>gg:%!sed 's/“”//g'<CR>
 
 if has('nvim')
-    tnoremap <C-e> <C-\><C-n>
-    au TermOpen  * setlocal norelativenumber nonumber
-    au TermClose * setlocal   relativenumber   number | exit
+    au TermOpen  * setlocal  norelativenumber nonumber
+    au TermClose * setlocal    relativenumber   number | q!
 endif
 
 " neoformat
@@ -217,9 +276,6 @@ endif
 	imap <c-x><c-f> <plug>(fzf-complete-path)
 	imap <c-x><c-j> <plug>(fzf-complete-file-ag)
 	imap <c-x><c-l> <plug>(fzf-complete-line)
-	autocmd! FileType fzf
-		autocmd  FileType fzf set laststatus=0 noshowmode noruler
-  		\| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
 
 	" Command for git grep
 	" - fzf#vim#grep(command, with_column, [options], [fullscreen])
@@ -519,7 +575,7 @@ endif
 	autocmd FileType bib inoremap ,c @incollection{<Enter>author<Space>=<Space>{<++>},<Enter>title<Space>=<Space>{<++>},<Enter>booktitle<Space>=<Space>{<++>},<Enter>editor<Space>=<Space>{<++>},<Enter>year<Space>=<Space>{<++>},<Enter>publisher<Space>=<Space>{<++>},<Enter>}<Enter><++><Esc>8kA,<Esc>i
 
 "MARKDOWN
-	autocmd Filetype markdown,rmd map <leader>w yiWi[<esc>Ea](<esc>pa)
+	autocmd Filetype markdown,rmd map <leader>W yiWi[<esc>Ea](<esc>pa)
 	autocmd Filetype markdown,rmd inoremap ,n ---<Enter><Enter>
 	autocmd Filetype markdown,rmd inoremap ,b ****<++><Esc>F*hi
 	autocmd Filetype markdown,rmd inoremap ,s ~~~~<++><Esc>F~hi
@@ -538,3 +594,7 @@ endif
 """.xml
 	autocmd FileType xml inoremap ,e <item><Enter><title><++></title><Enter><guid<space>isPermaLink="false"><++></guid><Enter><pubDate><Esc>:put<Space>=strftime('%a, %d %b %Y %H:%M:%S %z')<Enter>kJA</pubDate><Enter><link><++></link><Enter><description><![CDATA[<++>]]></description><Enter></item><Esc>?<title><enter>cit
 	autocmd FileType xml inoremap ,a <a href="<++>"><++></a><++><Esc>F"ci"
+
+""".py
+	au BufNewFile,BufRead *.py set tabstop=4 | set softtabstop=4 | set shiftwidth=4 | set textwidth=79 | set expandtab | set autoindent | set fileformat=unix
+	let python_highlight_all=1
