@@ -7,7 +7,7 @@ if ! filereadable(expand('~/.config/nvim/autoload/plug.vim'))
 	silent !curl "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim" > ~/.config/nvim/autoload/plug.vim
 endif
 
-if ! filereadable(expand('~/.config/nvim/.tern-config'))
+if ! filereadable(expand('~/.tern-config'))
 	echo "Copying tern config to $HOME..."
 	silent !cp ~/.config/nvim/.tern-config ~/
 endif
