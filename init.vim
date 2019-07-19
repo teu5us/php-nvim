@@ -361,6 +361,12 @@ endif
 	" IMPORTANT: :help Ncm2PopupOpen for more information
 	set completeopt=noinsert,menuone,noselect
 
+	" c-j c-k for moving in snippet
+	" let g:UltiSnipsExpandTrigger		= "<Plug>(ultisnips_expand)"
+	let g:UltiSnipsJumpForwardTrigger	= "<c-j>"
+	let g:UltiSnipsJumpBackwardTrigger	= "<c-k>"
+	let g:UltiSnipsRemoveSelectModeMappings = 0
+
 " tagbar
 	nmap <F8> :TagbarToggle<CR>
 
@@ -535,6 +541,7 @@ endif
 	autocmd FileType tex inoremap ,rn (\ref{})<++><Esc>F}i
 
 """HTML
+	au BufNewFile,BufRead *.html set tabstop=2 | set softtabstop=2 | set shiftwidth=2 | set textwidth=79 | set expandtab | set autoindent | set fileformat=unix
 	autocmd FileType html,php inoremap ,b <b></b><Esc>FbT>i
 	autocmd FileType html,php inoremap ,it <em></em><Esc>FeT>i
 	autocmd FileType html,php inoremap ,1 <h1></h1><Esc>2kf<i
@@ -579,6 +586,8 @@ endif
 	autocmd FileType html,php inoremap ò &ograve;
 	autocmd FileType html,php inoremap ù &ugrave;
 
+""".css
+	au BufNewFile,BufRead *.css set tabstop=2 | set softtabstop=2 | set shiftwidth=2 | set textwidth=79 | set expandtab | set autoindent | set fileformat=unix
 
 """.bib
 	autocmd FileType bib inoremap ,a @article{<Enter>author<Space>=<Space>{<++>},<Enter>year<Space>=<Space>{<++>},<Enter>title<Space>=<Space>{<++>},<Enter>journal<Space>=<Space>{<++>},<Enter>volume<Space>=<Space>{<++>},<Enter>pages<Space>=<Space>{<++>},<Enter>}<Enter><++><Esc>8kA,<Esc>i
