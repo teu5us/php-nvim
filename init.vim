@@ -641,6 +641,15 @@ endif
 """.js
 	au BufNewFile,BufRead *.js set tabstop=4 | set softtabstop=4 | set shiftwidth=4 | set textwidth=79 | set expandtab | set autoindent | set fileformat=unix
 
+""".css
+	if executable('css-languageserver')
+    	au User lsp_setup call lsp#register_server({
+        	\ 'name': 'css-languageserver',
+        	\ 'cmd': {server_info->[&shell, &shellcmdflag, 'css-languageserver --stdio']},
+        	\ 'whitelist': ['css', 'less', 'sass'],
+        	\ })
+	endif
+
 """ .vue (+html+css lsp)
 	autocmd BufEnter *.vue set filetype=vue
 
