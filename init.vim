@@ -629,6 +629,13 @@ endif
 """.py
 	au BufNewFile,BufRead *.py set tabstop=4 | set softtabstop=4 | set shiftwidth=4 | set textwidth=79 | set expandtab | set autoindent | set fileformat=unix
 	let python_highlight_all=1
+
+""".js
+	au BufNewFile,BufRead *.js set tabstop=4 | set softtabstop=4 | set shiftwidth=4 | set textwidth=79 | set expandtab | set autoindent | set fileformat=unix
+
+" LANGUAGESERVERS
+
+""".py
 	if executable('pyls')
     	" pip install python-language-server
     	au User lsp_setup call lsp#register_server({
@@ -638,8 +645,23 @@ endif
         	\ })
 	endif
 
-""".js
-	au BufNewFile,BufRead *.js set tabstop=4 | set softtabstop=4 | set shiftwidth=4 | set textwidth=79 | set expandtab | set autoindent | set fileformat=unix
+""".json
+	if executable('json-languageserver')
+    	au User lsp_setup call lsp#register_server({
+        	\ 'name': 'json-languageserver',
+        	\ 'cmd': {server_info->[&shell, &shellcmdflag, 'json-languageserver --stdio']},
+        	\ 'whitelist': ['json'],
+        	\ })
+	endif
+
+""".html
+	if executable('html-languageserver')
+    	au User lsp_setup call lsp#register_server({
+        	\ 'name': 'html-languageserver',
+        	\ 'cmd': {server_info->[&shell, &shellcmdflag, 'html-languageserver --stdio']},
+        	\ 'whitelist': ['html','xhtml','htm'],
+        	\ })
+	endif
 
 """.css
 	if executable('css-languageserver')
