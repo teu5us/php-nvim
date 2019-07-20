@@ -88,7 +88,7 @@ call plug#end()
 
 set bg=dark
 set laststatus=2
-colo blazer
+colo gruvbox
 set go=a
 set mouse=a
 set nohlsearch
