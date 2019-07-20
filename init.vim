@@ -13,6 +13,7 @@ if ! filereadable(expand('~/.tern-config'))
 endif
 
 call plug#begin('~/.config/nvimphp/plugged')
+Plug 'mattn/emmet-vim'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-capslock'
