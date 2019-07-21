@@ -88,8 +88,7 @@ call plug#end()
 
 set bg=dark
 set laststatus=2
-" colo gruvbox
-colo solarized8_dark_low
+colo gruvbox
 set go=a
 set mouse=a
 set nohlsearch
@@ -105,6 +104,8 @@ nmap <leader>Tbu :colo bubblegum<CR>
 nmap <leader>Еиг :colo bubblegum<CR>
 nmap <leader>Tda :colo darkzen<CR>
 nmap <leader>Евф :colo darkzen<CR>
+nmap <leader>Tso :colo solarized8_dark_low
+nmap <leader>Еыщ :colo solarized8_dark_low
 
 " Dictionary
 vmap <leader>xt y:silent !goldendict "<C-r>0" &<CR>
