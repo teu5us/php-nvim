@@ -88,9 +88,10 @@ Plug 'thomasfaingnaert/vim-lsp-ultisnips'
 Plug 'ryanolsonx/vim-lsp-javascript'
 call plug#end()
 
-set bg=dark
+set bg=light
 set laststatus=2
-colo gruvbox
+colo PaperColor
+let g:airline_theme='papercolor'
 set go=a
 set mouse=a
 set nohlsearch
@@ -108,6 +109,8 @@ nmap <leader>Tda :colo darkzen<CR>
 nmap <leader>Евф :colo darkzen<CR>
 nmap <leader>Tso :colo solarized8_dark_low<CR>
 nmap <leader>Еыщ :colo solarized8_dark_low<CR>
+nmap <leader>Tpa :colo PaperColor<CR>
+nmap <leader>Езф :colo PaperColor<CR>
 
 " Dictionary
 vmap <leader>xt y:silent !goldendict "<C-r>0" &<CR>
