@@ -12,7 +12,8 @@ if ! filereadable(expand('~/.tern-config'))
 	silent !cp ~/.config/nvim/.tern-config ~/
 endif
 
-call plug#begin('~/.config/nvimphp/plugged')
+call plug#begin('~/.config/nvim/plugged')
+Plug 'NLKNguyen/papercolor-theme'
 Plug 'mattn/emmet-vim'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
@@ -26,8 +27,9 @@ Plug 'terryma/vim-multiple-cursors'
 Plug 'LukeSmithxyz/vimling'
 Plug 'vimwiki/vimwiki'
 Plug 'bling/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'tpope/vim-commentary'
-Plug 'powerman/vim-plugin-ruscmd'
+Plug 'Teu5us/vim-plugin-ruscmd'
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'dhruvasagar/vim-table-mode'
 Plug 'tpope/vim-abolish'
@@ -54,14 +56,14 @@ Plug 'ncm2/ncm2-html-subscope'
 Plug 'lervag/vimtex'
 Plug 'ncm2/ncm2-markdown-subscope'
 Plug 'ncm2/ncm2-vim' | Plug 'Shougo/neco-vim'
-Plug 'StanAngeloff/php.vim'
-Plug 'rayburgemeestre/phpfolding.vim'
-Plug '2072/PHP-Indenting-for-VIm'
-Plug 'stephpy/vim-php-cs-fixer'
-Plug 'phpactor/phpactor' ,  {'do': 'composer install', 'for': 'php'}
-Plug 'phpactor/ncm2-phpactor'
+" Plug 'StanAngeloff/php.vim'
+" Plug 'rayburgemeestre/phpfolding.vim'
+" Plug '2072/PHP-Indenting-for-VIm'
+" Plug 'stephpy/vim-php-cs-fixer'
+" Plug 'phpactor/phpactor' ,  {'do': 'composer install', 'for': 'php'}
+" Plug 'phpactor/ncm2-phpactor'
+" Plug 'adoy/vim-php-refactoring-toolbox'
 Plug 'neomake/neomake'
-Plug 'adoy/vim-php-refactoring-toolbox'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'bfredl/nvim-miniyank'
 Plug 'easymotion/vim-easymotion'
