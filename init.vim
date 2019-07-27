@@ -107,10 +107,10 @@ nmap <leader>Tbu :colo bubblegum<CR>
 nmap <leader>Еиг :colo bubblegum<CR>
 nmap <leader>Tda :colo darkzen<CR>
 nmap <leader>Евф :colo darkzen<CR>
-nmap <leader>Tso :colo solarized8_dark_low<CR>
-nmap <leader>Еыщ :colo solarized8_dark_low<CR>
-nmap <leader>Tpa :colo PaperColor<CR>
-nmap <leader>Езф :colo PaperColor<CR>
+nmap <leader>Tso :colo solarized8_dark_low \| :AirlineTheme solarized \| :set bg=dark<CR>
+nmap <leader>Еыщ :colo solarized8_dark_low \| :AirlineTheme solarized \| :set bg=dark<CR>
+nmap <leader>Tpa :colo PaperColor \| :AirlineTheme papercolor \| :set bg=light<CR>
+nmap <leader>Езф :colo PaperColor \| :AirlineTheme papercolor \| :set bg=light<CR>
 
 " Dictionary
 vmap <leader>xt y:silent !goldendict "<C-r>0" &<CR>
