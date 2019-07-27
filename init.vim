@@ -90,8 +90,8 @@ call plug#end()
 
 set bg=light
 set laststatus=2
-colo PaperColor
-let g:airline_theme='papercolor'
+colo solarized8_dark_low
+let g:airline_theme='solarized'
 set go=a
 set mouse=a
 set nohlsearch
