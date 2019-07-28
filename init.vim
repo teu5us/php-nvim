@@ -377,7 +377,7 @@ endif
             \ 'on_complete': ['ncm2#on_complete#omni', 'vimtex#complete#omnifunc'],
             \ })
 	" IMPORTANT: :help Ncm2PopupOpen for more information
-	set completeopt=noinsert,menuone,noselect
+	set completeopt=noinsert,menuone,noselect,preview
 
 	" c-j c-k for moving in snippet
 	" let g:UltiSnipsExpandTrigger		= "<Plug>(ultisnips_expand)"
