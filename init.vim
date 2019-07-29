@@ -157,10 +157,10 @@ nmap <leader>qq :qa<CR>
 nmap <leader>йй :qa<CR>
 
 " vimrc
-nmap <leader>fed :e ~/.vimrc<CR>
-nmap <leader>аув :e ~/.vimrc<CR>
-nmap <leader>feR :source ~/.vimrc<CR>
-nmap <leader>ауК :source ~/.vimrc<CR>
+nmap <leader>fed :e ~/.config/nvim/init.vim<CR>
+nmap <leader>аув :e ~/.config/nvim/init.vim<CR>
+nmap <leader>feR :source ~/.config/nvim/init.vim<CR>
+nmap <leader>ауК :source ~/.config/nvim/init.vim<CR>
 
 " Command mode disabled
 nnoremap Q q
