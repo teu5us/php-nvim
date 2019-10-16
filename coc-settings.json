@@ -1,0 +1,46 @@
+{
+  "html.filetypes": ["html","handlebars","pug"],
+  "css.filetypes": ["css", "less", "scss", "sass"],
+  "vetur.useWorkspaceDependencies": true,
+  "python.jediEnabled": false,
+  "python.linting.pylintEnabled": false,
+  "python.linting.pep8Enabled": true,
+  "python.linting.enabled": true,
+  "python.formatting.provider": "autopep8",
+  "suggest.enablePreview": true,
+  "translator.toLang": "ru",
+  "translator.engines": [ "google", "bing" ],
+  "emmet.includeLanguages": {"pug": "html"},
+  "codeLens.enable":  true,
+
+  "languageserver": {
+    "haskell": {
+      "command": "hie-wrapper",
+      "rootPatterns": [
+        ".stack.yaml",
+        "cabal.config",
+        "package.yaml"
+      ],
+      "filetypes": [
+        "hs",
+        "lhs",
+        "haskell"
+      ],
+      "initializationOptions": {
+        "languageServerHaskell": {
+        }
+      }
+    },
+    "elmLS": {
+      "command": "elm-language-server",
+      "filetypes": ["elm"],
+      "rootPatterns": ["elm.json"],
+      "initializationOptions": {
+        "elmPath": "elm",
+        "elmFormatPath": "elm-format",
+        "elmTestPath": "elm-test",
+        "elmAnalyseTrigger": "never"
+      }
+    }
+  }
+}
