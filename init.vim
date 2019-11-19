@@ -687,90 +687,100 @@ colo PaperColor
 """LATEX
 	au BufNewFile,BufRead *.tex set tabstop=2 | set softtabstop=2 | set shiftwidth=2 | set textwidth=79 | set expandtab | set autoindent | set fileformat=unix
 	au InsertLeave *.tex w
-	" Word count:
-	" autocmd FileType tex map <leader>W :w !detex \| wc -w<CR>
-	" Code snippets
-	autocmd FileType tex inoremap <buffer> ,fr \begin{frame}<Enter>\frametitle{}<Enter><Enter><++><Enter><Enter>\end{frame}<Enter><Enter><++><Esc>6kf}i
-	autocmd FileType tex inoremap <buffer> ,fi \begin{fitch}<Enter><Enter>\end{fitch}<Enter><Enter><++><Esc>3kA
-	autocmd FileType tex inoremap <buffer> ,exe \begin{exe}<Enter>\ex<Space><Enter>\end{exe}<Enter><Enter><++><Esc>3kA
-	autocmd FileType tex inoremap <buffer> ,em \emph{}<++><Esc>T{i
-	autocmd FileType tex inoremap <buffer> ,bf \textbf{}<++><Esc>T{i
-	autocmd FileType tex vnoremap <buffer> , <ESC>`<i\{<ESC>`>2la}<ESC>?\\{<Enter>a
-	autocmd FileType tex inoremap <buffer> ,it \textit{}<++><Esc>T{i
-	autocmd FileType tex inoremap <buffer> ,ct \textcite{}<++><Esc>T{i
-	autocmd FileType tex inoremap <buffer> ,cp \parencite{}<++><Esc>T{i
-	autocmd FileType tex inoremap <buffer> ,glos {\gll<Space><++><Space>\\<Enter><++><Space>\\<Enter>\trans{``<++>''}}<Esc>2k2bcw
-	autocmd FileType tex inoremap <buffer> ,x \begin{xlist}<Enter>\ex<Space><Enter>\end{xlist}<Esc>kA<Space>
-	autocmd FileType tex inoremap <buffer> ,ol \begin{enumerate}<Enter><Enter>\end{enumerate}<Enter><Enter><++><Esc>3kA\item<Space>
-	autocmd FileType tex inoremap <buffer> ,ul \begin{itemize}<Enter><Enter>\end{itemize}<Enter><Enter><++><Esc>3kA\item<Space>
-	autocmd FileType tex inoremap <buffer> ,li <Enter>\item<Space>
-	autocmd FileType tex inoremap <buffer> ,ref \ref{}<Space><++><Esc>T{i
-	autocmd FileType tex inoremap <buffer> ,tab \begin{tabular}<Enter><++><Enter>\end{tabular}<Enter><Enter><++><Esc>4kA{}<Esc>i
-	autocmd FileType tex inoremap <buffer> ,ot \begin{tableau}<Enter>\inp{<++>}<Tab>\const{<++>}<Tab><++><Enter><++><Enter>\end{tableau}<Enter><Enter><++><Esc>5kA{}<Esc>i
-	autocmd FileType tex inoremap <buffer> ,can \cand{}<Tab><++><Esc>T{i
-	autocmd FileType tex inoremap <buffer> ,con \const{}<Tab><++><Esc>T{i
-	autocmd FileType tex inoremap <buffer> ,v \vio{}<Tab><++><Esc>T{i
-	autocmd FileType tex inoremap <buffer> ,a \href{}{<++>}<Space><++><Esc>2T{i
-	autocmd FileType tex inoremap <buffer> ,sc \textsc{}<Space><++><Esc>T{i
-	autocmd FileType tex inoremap <buffer> ,chap \chapter{}<Enter><Enter><++><Esc>2kf}i
-	autocmd FileType tex inoremap <buffer> ,sec \section{}<Enter><Enter><++><Esc>2kf}i
-	autocmd FileType tex inoremap <buffer> ,ssec \subsection{}<Enter><Enter><++><Esc>2kf}i
-	autocmd FileType tex inoremap <buffer> ,sssec \subsubsection{}<Enter><Enter><++><Esc>2kf}i
-	autocmd FileType tex inoremap <buffer> ,st <Esc>F{i*<Esc>f}i
-	autocmd FileType tex inoremap <buffer> ,beg \begin{DELRN}<Enter><++><Enter>\end{DELRN}<Enter><Enter><++><Esc>4k0fR:MultipleCursorsFind<Space>DELRN<Enter>c
-	autocmd FileType tex inoremap <buffer> ,up <Esc>/usepackage<Enter>o\usepackage{}<Esc>i
-	autocmd FileType tex nnoremap <buffer> ,up /usepackage<Enter>o\usepackage{}<Esc>i
-	autocmd FileType tex inoremap <buffer> ,tt \texttt{}<Space><++><Esc>T{i
-	autocmd FileType tex inoremap <buffer> ,bt {\blindtext}
-	autocmd FileType tex inoremap <buffer> ,nu $\varnothing$
-	autocmd FileType tex inoremap <buffer> ,col \begin{columns}[T]<Enter>\begin{column}{.5\textwidth}<Enter><Enter>\end{column}<Enter>\begin{column}{.5\textwidth}<Enter><++><Enter>\end{column}<Enter>\end{columns}<Esc>5kA
-	autocmd FileType tex inoremap <buffer> ,rn (\ref{})<++><Esc>F}i
+
+	fu! TEX()
+		" Word count:
+		" autocmd FileType tex map <leader>W :w !detex \| wc -w<CR>
+		" Code snippets
+		inoremap <buffer> ,fr \begin{frame}<Enter>\frametitle{}<Enter><Enter><++><Enter><Enter>\end{frame}<Enter><Enter><++><Esc>6kf}i
+		inoremap <buffer> ,fi \begin{fitch}<Enter><Enter>\end{fitch}<Enter><Enter><++><Esc>3kA
+		inoremap <buffer> ,exe \begin{exe}<Enter>\ex<Space><Enter>\end{exe}<Enter><Enter><++><Esc>3kA
+		inoremap <buffer> ,em \emph{}<++><Esc>T{i
+		inoremap <buffer> ,bf \textbf{}<++><Esc>T{i
+		vnoremap <buffer> , <ESC>`<i\{<ESC>`>2la}<ESC>?\\{<Enter>a
+		inoremap <buffer> ,it \textit{}<++><Esc>T{i
+		inoremap <buffer> ,ct \textcite{}<++><Esc>T{i
+		inoremap <buffer> ,cp \parencite{}<++><Esc>T{i
+		inoremap <buffer> ,glos {\gll<Space><++><Space>\\<Enter><++><Space>\\<Enter>\trans{``<++>''}}<Esc>2k2bcw
+		inoremap <buffer> ,x \begin{xlist}<Enter>\ex<Space><Enter>\end{xlist}<Esc>kA<Space>
+		inoremap <buffer> ,ol \begin{enumerate}<Enter><Enter>\end{enumerate}<Enter><Enter><++><Esc>3kA\item<Space>
+		inoremap <buffer> ,ul \begin{itemize}<Enter><Enter>\end{itemize}<Enter><Enter><++><Esc>3kA\item<Space>
+		inoremap <buffer> ,li <Enter>\item<Space>
+		inoremap <buffer> ,ref \ref{}<Space><++><Esc>T{i
+		inoremap <buffer> ,tab \begin{tabular}<Enter><++><Enter>\end{tabular}<Enter><Enter><++><Esc>4kA{}<Esc>i
+		inoremap <buffer> ,ot \begin{tableau}<Enter>\inp{<++>}<Tab>\const{<++>}<Tab><++><Enter><++><Enter>\end{tableau}<Enter><Enter><++><Esc>5kA{}<Esc>i
+		inoremap <buffer> ,can \cand{}<Tab><++><Esc>T{i
+		inoremap <buffer> ,con \const{}<Tab><++><Esc>T{i
+		inoremap <buffer> ,v \vio{}<Tab><++><Esc>T{i
+		inoremap <buffer> ,a \href{}{<++>}<Space><++><Esc>2T{i
+		inoremap <buffer> ,sc \textsc{}<Space><++><Esc>T{i
+		inoremap <buffer> ,chap \chapter{}<Enter><Enter><++><Esc>2kf}i
+		inoremap <buffer> ,sec \section{}<Enter><Enter><++><Esc>2kf}i
+		inoremap <buffer> ,ssec \subsection{}<Enter><Enter><++><Esc>2kf}i
+		inoremap <buffer> ,sssec \subsubsection{}<Enter><Enter><++><Esc>2kf}i
+		inoremap <buffer> ,st <Esc>F{i*<Esc>f}i
+		inoremap <buffer> ,beg \begin{DELRN}<Enter><++><Enter>\end{DELRN}<Enter><Enter><++><Esc>4k0fR:MultipleCursorsFind<Space>DELRN<Enter>c
+		inoremap <buffer> ,up <Esc>/usepackage<Enter>o\usepackage{}<Esc>i
+		nnoremap <buffer> ,up /usepackage<Enter>o\usepackage{}<Esc>i
+		inoremap <buffer> ,tt \texttt{}<Space><++><Esc>T{i
+		inoremap <buffer> ,bt {\blindtext}
+		inoremap <buffer> ,nu $\varnothing$
+		inoremap <buffer> ,col \begin{columns}[T]<Enter>\begin{column}{.5\textwidth}<Enter><Enter>\end{column}<Enter>\begin{column}{.5\textwidth}<Enter><++><Enter>\end{column}<Enter>\end{columns}<Esc>5kA
+		inoremap <buffer> ,rn (\ref{})<++><Esc>F}i
+	endfu
+
+  au FileType tex call TEX()
 
 """HTML
 	au BufNewFile,BufRead *.html set tabstop=2 | set softtabstop=2 | set shiftwidth=2 | set textwidth=150 | set expandtab | set autoindent | set fileformat=unix
-	autocmd FileType html inoremap <buffer> ,b <b></b><Esc>FbT>i
-	autocmd FileType html inoremap <buffer> ,it <em></em><Esc>FeT>i
-	autocmd FileType html inoremap <buffer> ,1 <h1></h1><Esc>2kf<i
-	autocmd FileType html inoremap <buffer> ,2 <h2></h2><Esc>2kf<i
-	autocmd FileType html inoremap <buffer> ,3 <h3></h3><Esc>2kf<i
-	autocmd FileType html inoremap <buffer> ,p <p></p><Esc>0f>a
-	autocmd FileType html inoremap <buffer> ,a <a<Space>href=""><++></a><Esc>14hi
-	autocmd FileType html inoremap <buffer> ,e <a<Space>target="_blank"<Space>href=""><++></a><Esc>14hi
-	autocmd FileType html inoremap <buffer> ,ul <ul><Enter><li></li><Enter></ul><Enter><Enter><++><Esc>03kf<i
-	autocmd FileType html inoremap <buffer> ,li <Esc>o<li></li><Esc>F>a
-	autocmd FileType html inoremap <buffer> ,ol <ol><Enter><li></li><Enter></ol><Enter><Enter><++><Esc>03kf<i
-	autocmd FileType html inoremap <buffer> ,im <img src="" alt="<++>"><++><esc>Fcf"a
-	autocmd FileType html inoremap <buffer> ,td <td></td><++><Esc>Fdcit
-	autocmd FileType html inoremap <buffer> ,tr <tr></tr><Enter><++><Esc>kf<i
-	autocmd FileType html inoremap <buffer> ,th <th></th><++><Esc>Fhcit
-	autocmd FileType html inoremap <buffer> ,tab <table><Enter></table><Esc>O
-	autocmd FileType html inoremap <buffer> ,gr <font color="green"></font><Esc>F>a
-	autocmd FileType html inoremap <buffer> ,rd <font color="red"></font><Esc>F>a
-	autocmd FileType html inoremap <buffer> ,yl <font color="yellow"></font><Esc>F>a
-	autocmd FileType html inoremap <buffer> ,dt <dt></dt><Enter><dd><++></dd><Enter><++><esc>2kcit
-	autocmd FileType html inoremap <buffer> ,dl <dl><Enter><Enter></dl><enter><enter><++><esc>3kcc
-	autocmd FileType html inoremap <buffer> &<space> &amp;<space>
-	autocmd FileType html inoremap <buffer> á &aacute;
-	autocmd FileType html inoremap <buffer> é &eacute;
-	autocmd FileType html inoremap <buffer> í &iacute;
-	autocmd FileType html inoremap <buffer> ó &oacute;
-	autocmd FileType html inoremap <buffer> ú &uacute;
-	autocmd FileType html inoremap <buffer> ä &auml;
-	autocmd FileType html inoremap <buffer> ë &euml;
-	autocmd FileType html inoremap <buffer> ï &iuml;
-	autocmd FileType html inoremap <buffer> ö &ouml;
-	autocmd FileType html inoremap <buffer> ü &uuml;
-	autocmd FileType html inoremap <buffer> ã &atilde;
-	autocmd FileType html inoremap <buffer> ẽ &etilde;
-	autocmd FileType html inoremap <buffer> ĩ &itilde;
-	autocmd FileType html inoremap <buffer> õ &otilde;
-	autocmd FileType html inoremap <buffer> ũ &utilde;
-	autocmd FileType html inoremap <buffer> ñ &ntilde;
-	autocmd FileType html inoremap <buffer> à &agrave;
-	autocmd FileType html inoremap <buffer> è &egrave;
-	autocmd FileType html inoremap <buffer> ì &igrave;
-	autocmd FileType html inoremap <buffer> ò &ograve;
-	autocmd FileType html inoremap <buffer> ù &ugrave;
+
+  fu! HTML()
+    inoremap <buffer> ,b <b></b><Esc>FbT>i
+    inoremap <buffer> ,it <em></em><Esc>FeT>i
+    inoremap <buffer> ,1 <h1></h1><Esc>2kf<i
+    inoremap <buffer> ,2 <h2></h2><Esc>2kf<i
+    inoremap <buffer> ,3 <h3></h3><Esc>2kf<i
+    inoremap <buffer> ,p <p></p><Esc>0f>a
+    inoremap <buffer> ,a <a<Space>href=""><++></a><Esc>14hi
+    inoremap <buffer> ,e <a<Space>target="_blank"<Space>href=""><++></a><Esc>14hi
+    inoremap <buffer> ,ul <ul><Enter><li></li><Enter></ul><Enter><Enter><++><Esc>03kf<i
+    inoremap <buffer> ,li <Esc>o<li></li><Esc>F>a
+    inoremap <buffer> ,ol <ol><Enter><li></li><Enter></ol><Enter><Enter><++><Esc>03kf<i
+    inoremap <buffer> ,im <img src="" alt="<++>"><++><esc>Fcf"a
+    inoremap <buffer> ,td <td></td><++><Esc>Fdcit
+    inoremap <buffer> ,tr <tr></tr><Enter><++><Esc>kf<i
+    inoremap <buffer> ,th <th></th><++><Esc>Fhcit
+    inoremap <buffer> ,tab <table><Enter></table><Esc>O
+    inoremap <buffer> ,gr <font color="green"></font><Esc>F>a
+    inoremap <buffer> ,rd <font color="red"></font><Esc>F>a
+    inoremap <buffer> ,yl <font color="yellow"></font><Esc>F>a
+    inoremap <buffer> ,dt <dt></dt><Enter><dd><++></dd><Enter><++><esc>2kcit
+    inoremap <buffer> ,dl <dl><Enter><Enter></dl><enter><enter><++><esc>3kcc
+    inoremap <buffer> &<space> &amp;<space>
+    inoremap <buffer> á &aacute;
+    inoremap <buffer> é &eacute;
+    inoremap <buffer> í &iacute;
+    inoremap <buffer> ó &oacute;
+    inoremap <buffer> ú &uacute;
+    inoremap <buffer> ä &auml;
+    inoremap <buffer> ë &euml;
+    inoremap <buffer> ï &iuml;
+    inoremap <buffer> ö &ouml;
+    inoremap <buffer> ü &uuml;
+    inoremap <buffer> ã &atilde;
+    inoremap <buffer> ẽ &etilde;
+    inoremap <buffer> ĩ &itilde;
+    inoremap <buffer> õ &otilde;
+    inoremap <buffer> ũ &utilde;
+    inoremap <buffer> ñ &ntilde;
+    inoremap <buffer> à &agrave;
+    inoremap <buffer> è &egrave;
+    inoremap <buffer> ì &igrave;
+    inoremap <buffer> ò &ograve;
+    inoremap <buffer> ù &ugrave;
+  endfu
+
+  au FileType html call HTML()
 
 """.bib
 	autocmd FileType bib inoremap ,a @article{<Enter>author<Space>=<Space>{<++>},<Enter>year<Space>=<Space>{<++>},<Enter>title<Space>=<Space>{<++>},<Enter>journal<Space>=<Space>{<++>},<Enter>volume<Space>=<Space>{<++>},<Enter>pages<Space>=<Space>{<++>},<Enter>}<Enter><++><Esc>8kA,<Esc>i
@@ -780,33 +790,37 @@ colo PaperColor
 "MARKDOWN
 	" au FileType markdown,pandoc set tabstop=2 | set softtabstop=2 | set shiftwidth=2 | set textwidth=80 | set expandtab | set autoindent | set fileformat=unix
 	" autocmd BufEnter *.rmd set filetype=pandoc
-	autocmd Filetype vimwiki map <buffer> <leader>W yiWi[<esc>Ea](<esc>pa)
-	autocmd Filetype vimwiki map <buffer> <leader>Ц yiWi[<esc>Ea](<esc>pa)
-	autocmd Filetype vimwiki inoremap <buffer> \n ---<Enter><Enter>
-	autocmd Filetype vimwiki inoremap <buffer> \т ---<Enter><Enter>
-	autocmd Filetype vimwiki inoremap <buffer> \b ****<++><Esc>F*hi
-	autocmd Filetype vimwiki inoremap <buffer> \и ****<++><Esc>F*hi
-	autocmd Filetype vimwiki inoremap <buffer> \c **<++><Esc>F*i
-	autocmd Filetype vimwiki inoremap <buffer> \с **<++><Esc>F*i
-	autocmd Filetype vimwiki inoremap <buffer> \s ~~~~<++><Esc>F~hi
-	autocmd Filetype vimwiki inoremap <buffer> \ы ~~~~<++><Esc>F~hi
-	autocmd Filetype vimwiki inoremap <buffer> \e **<++><Esc>F*i
-	autocmd Filetype vimwiki inoremap <buffer> \у **<++><Esc>F*i
-	" autocmd Filetype vimwiki inoremap ,h ====<Space><++><Esc>F=hi
-	autocmd Filetype vimwiki inoremap <buffer> \i ![](<++>)<++><Esc>F[a
-	autocmd Filetype vimwiki inoremap <buffer> \ш ![](<++>)<++><Esc>F[a
-	autocmd Filetype vimwiki inoremap <buffer> \a [](<++>)<++><Esc>F[a
-	autocmd Filetype vimwiki inoremap <buffer> \ф [](<++>)<++><Esc>F[a
-	autocmd Filetype vimwiki inoremap <buffer> \1 #<Space><Enter><++><Esc>kA
-	autocmd Filetype vimwiki inoremap <buffer> \2 ##<Space><Enter><++><Esc>kA
-	autocmd Filetype vimwiki inoremap <buffer> \3 ###<Space><Enter><++><Esc>kA
-	autocmd Filetype vimwiki inoremap <buffer> \l --------<Enter>
-	autocmd Filetype vimwiki inoremap <buffer> \д --------<Enter>
-	autocmd Filetype vimwiki inoremap <buffer> \p <++>
-	autocmd Filetype vimwiki inoremap <buffer> \з <++>
-	" autocmd Filetype rmd inoremap ,r ```{r}<CR>```<CR><CR><esc>2kO
-	" autocmd Filetype rmd inoremap ,p ```{python}<CR>```<CR><CR><esc>2kO
-	" autocmd Filetype rmd inoremap ,c ```<cr>```<cr><cr><esc>2kO
+	function! MD()
+    map <buffer> <leader>W yiWi[<esc>Ea](<esc>pa)
+    map <buffer> <leader>Ц yiWi[<esc>Ea](<esc>pa)
+    inoremap <buffer> \n ---<Enter><Enter>
+    inoremap <buffer> \т ---<Enter><Enter>
+    inoremap <buffer> \b ****<++><Esc>F*hi
+    inoremap <buffer> \и ****<++><Esc>F*hi
+    inoremap <buffer> \c **<++><Esc>F*i
+    inoremap <buffer> \с **<++><Esc>F*i
+    inoremap <buffer> \s ~~~~<++><Esc>F~hi
+    inoremap <buffer> \ы ~~~~<++><Esc>F~hi
+    inoremap <buffer> \e **<++><Esc>F*i
+    inoremap <buffer> \у **<++><Esc>F*i
+    inoremap <buffer> \i ![](<++>)<++><Esc>F[a
+    inoremap <buffer> \ш ![](<++>)<++><Esc>F[a
+    inoremap <buffer> \a [](<++>)<++><Esc>F[a
+    inoremap <buffer> \ф [](<++>)<++><Esc>F[a
+    inoremap <buffer> \1 #<Space><Enter><++><Esc>kA
+    inoremap <buffer> \2 ##<Space><Enter><++><Esc>kA
+    inoremap <buffer> \3 ###<Space><Enter><++><Esc>kA
+    inoremap <buffer> \l --------<Enter>
+    inoremap <buffer> \д --------<Enter>
+    inoremap <buffer> \p <++>
+    inoremap <buffer> \з <++>
+    "
+    " inoremap ,h ====<Space><++><Esc>F=hi
+    " inoremap ,r ```{r}<CR>```<CR><CR><esc>2kO
+    " inoremap ,p ```{python}<CR>```<CR><CR><esc>2kO
+    " inoremap ,c ```<cr>```<cr><cr><esc>2kO
+  endfu
+  au FileType vimwiki call MD()
 
 "WIKI
 	autocmd BufEnter *.wiki set filetype=wiki
