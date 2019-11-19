@@ -3,28 +3,54 @@ let maplocalleader ="-"
 set guicursor=
 let $VTE_VERSION="100"
 
-let g:netrw_banner = 0
-let g:netrw_liststyle = 3
-let g:netrw_browse_split = 4
-let g:netrw_altv = 1
-let g:netrw_winsize = 25
-" augroup ProjectDrawer
-"   autocmd!
-"   autocmd VimEnter * :Vexplore
-" augroup END
-nmap <leader>tf :Vexplore<CR>
-nmap <leader>еа :Vexplore<CR>
+" function! SetKeyMap()
+" if system("setxkbmap -query | awk '/^variant/ {print $2}'") == "altgr-intl,\n"
+"   set keymap=russian-jcukenwin
+" elseif system("setxkbmap -query | awk '/^variant/ {print $2}'") == "dvorak-alt-intl,\n"
+"   set keymap=russian-dvorak
+" endif
+" endfunction
 
+" call SetKeyMap()
+
+" nnoremap <C-z> /<C-^><C-c>
+" vnoremap <C-z> /<C-^><C-c>
+" inoremap <C-z> <C-^>
+" cmap <C-z> <C-^>
+" set ttimeoutlen=50
+" set iminsert=0
+" set imsearch=-1
+
+" Some basics:
+	nnoremap c "_c
+	set nocompatible
+	filetype plugin indent on
+  set omnifunc=syntaxcomplete#Complete
+	syntax on
+	set encoding=utf-8
+	set number relativenumber
+	" set number
+" Enable autocompletion:
+	set wildmode=longest,list,full
+" Disables automatic commenting on newline:
+	" autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+
+" Splits open at the bottom and right, which is non-retarded, unlike vim defaults.
+	set splitbelow splitright
+
+" Moar speed
 set lazyredraw
 set ttyfast
 set synmaxcol=200
 set regexpengine=1
 
+" Appearance
 set termguicolors
 set t_Co=256
 set bg=dark
 set laststatus=2
 set cursorline
+
 set go=a
 set mouse=a
 set nohlsearch
@@ -37,21 +63,6 @@ set noswapfile
 set completeopt+=preview
 set title titlelen=0 titlestring=%<%F%=%(\ %)\|%(\ %)%l/%L-%P
 " set title titlestring=%<%F%= titlelen=0
-map ze z=
-map яу z=
-map gh <Nop>
-
-" enable emacs-style line navigation in insert mode
-inoremap <C-f> <Right>
-inoremap <C-b> <Left>
-inoremap <C-p> <Up>
-noremap <C-n> <Down>
-inoremap <C-o> <C-[>ea
-inoremap <C-u> <C-[>gea
-inoremap <C-e> <C-[>A
-inoremap <C-a> <C-[>I
-inoremap <C-q> <C-[>(i
-inoremap <C-k> <Right><C-[>)i
 
 if ! filereadable(expand('~/.config/nvim/autoload/plug.vim'))
 	echo "Downloading junegunn/vim-plug to manage plugins..."
@@ -63,9 +74,7 @@ call plug#begin('~/.config/nvim/plugged')
 " Visuals
 Plug 'nikvdp/neomux'
 Plug 'shinchu/lightline-gruvbox.vim'
-Plug 'mengelbrecht/lightline-bufferline'
 Plug 'itchyny/lightline.vim'
-  set showtabline=2
 	let g:lightline = {
 			\ 'colorscheme' : 'deus',
 			\ 'active' : {
@@ -77,22 +86,6 @@ Plug 'itchyny/lightline.vim'
       \ 'winnum' : 'WindowNumber'
 			\ },
 			\ }
-  let g:lightline#bufferline#show_number  = 2
-  let g:lightline#bufferline#shorten_path = 0
-  let g:lightline#bufferline#unnamed      = '[No Name]'
-  let g:lightline.tabline          = {'left': [['buffers']], 'right': [['close']]}
-  let g:lightline.component_expand = {'buffers': 'lightline#bufferline#buffers'}
-  let g:lightline.component_type   = {'buffers': 'tabsel'}
-  nmap <Leader>1 <Plug>lightline#bufferline#go(1)
-  nmap <Leader>2 <Plug>lightline#bufferline#go(2)
-  nmap <Leader>3 <Plug>lightline#bufferline#go(3)
-  nmap <Leader>4 <Plug>lightline#bufferline#go(4)
-  nmap <Leader>5 <Plug>lightline#bufferline#go(5)
-  nmap <Leader>6 <Plug>lightline#bufferline#go(6)
-  nmap <Leader>7 <Plug>lightline#bufferline#go(7)
-  nmap <Leader>8 <Plug>lightline#bufferline#go(8)
-  nmap <Leader>9 <Plug>lightline#bufferline#go(9)
-  nmap <Leader>0 <Plug>lightline#bufferline#go(10)
 Plug 'morhetz/gruvbox'
   let g:gruvbox_italic = 1
   let g:gruvbox_termcolors = 256
@@ -128,56 +121,38 @@ Plug 'digitaltoad/vim-pug'
 Plug 'sheerun/vim-polyglot'
 	let g:polyglot_disabled = ['vue', 'markdown']
 Plug 'posva/vim-vue'
-	" let g:vue_pre_processors = []
+    " let g:vue_pre_processors = []
   	let g:vue_pre_processors = 'detect_on_enter'
 Plug 'chrisbra/Colorizer'
 	let g:colorizer_auto_color = 1
 	let g:colorizer_auto_filetype='css,scss,sass,html,pug,vue'
-" Plug 'dkarter/bullets.vim'
 Plug 'vimwiki/vimwiki'
-" Plug 'vim-pandoc/vim-pandoc'
-  " map aS
-  " map iS
-  " map <localleader>i
-  " map <localleader>b
-  " map <localleader>`
-  " map <localleader>~~
-  " map <localleader>^
-  " map <localleader>_
-  " map <localleader>#
-  " map <localleader>hd
-  " map <localleader>hn
-  " map <localleader>hb
-  " map <localleader>hh
-  " map <localleader>hp
-  " map <localleader>hsn
-  " map <localleader>hsb
-  " map <localleader>hcf
-  " map <localleader>hcl
-  " map <localleader>hcn
-  " map <localleader>nr
-  " map <localleader>rg
-  " map <localleader>rb
-  " map <localleader>gl
-  " map <localleader>sl
-  " map <localleader>gb
-  " map <localleader>gB
-  " map <localleader>ln
-  " map <localleader>lp
-  " map <localleader>ll
-  " map <localleader>llp
-  " map <localleader>lsn
-  " map <localleader>lsp
-  " map <localleader>lcf
-  " map <localleader>lcl
-  " map <localleader>lcn
-" Plug 'vim-pandoc/vim-pandoc-syntax'
-" 	let g:pandoc#filetypes#handled = ["pandoc", "markdown"]
-" 	let g:pandoc#filetypes#pandoc_markdown = 1
-" 	let g:pandoc#spell#enabled = 0
-" "	let g:pandoc#formatting#mode ="ha"
-" "	let g:pandoc#folding#level = 1
-" 	let g:pandoc#folding#fold_yaml = 1
+  " Ensure files are read as what I want:
+	let g:vimwiki_ext2syntax = {'.Rmd': 'markdown', '.rmd': 'markdown','.md': 'markdown', '.markdown': 'markdown', '.mdown': 'markdown'}
+	let g:vimwiki_list = [{'path': '~/vimwiki', 'syntax': 'markdown', 'ext': '.md'}]
+	let g:markdown_syntax_conceal = 0
+  let g:vimwiki_global_ext = 1
+  let g:vimwiki_folding = 'custom'
+  set foldtext=MyFoldText()
+  fu! MyFoldText()
+  	let line = getline(v:foldstart)
+
+  	" markdown frontmatter -- just take the next line hoping it would be
+  	" title: Your title
+  	if line =~ '^----*$'
+  		let line = getline(v:foldstart+1)
+  	endif
+
+  	let indent = max([indent(v:foldstart)-v:foldlevel, 1])
+  	let lines = (v:foldend - v:foldstart + 1)
+  	let strip_line = substitute(line, '^//\|=\+\|["#]\|/\*\|\*/\|{{{\d\=\|title:\s*', '', 'g')
+  	let strip_line = substitute(strip_line, '^[[:space:]]*\|[[:space:]]*$', '', 'g')
+  	let text = strpart(strip_line, 0, winwidth(0) - v:foldlevel - indent - 6 - strlen(lines))
+  	if strlen(strip_line) > strlen(text)
+  		let text = text.'…'
+  	endif
+  	return repeat('▧', v:foldlevel) . repeat(' ', indent) . text .' ('. lines .')'
+  endfu
 Plug 'lervag/vimtex'
     let g:vimtex_quickfix_enabled = 0
     let g:vimtex_compiler_progname = 'nvr'
@@ -208,11 +183,6 @@ Plug 'lervag/vimtex'
 
 " Movement
 Plug 'Teu5us/vim-plugin-ruscmd'
-Plug 'easymotion/vim-easymotion'
-	map <leader>jw <Plug>(easymotion-bd-w)
-	map <leader>оц <Plug>(easymotion-bd-w)
-	map <leader>jW <Plug>(easymotion-overwin-w)
-	map <leader>оЦ <Plug>(easymotion-overwin-w)
 
 " Else
 Plug 'roxma/vim-hug-neovim-rpc'
@@ -258,35 +228,11 @@ Plug 'jsfaint/gen_tags.vim'
 Plug 'ludovicchabant/vim-gutentags'
 	let g:gutentags_enabled=0
 Plug 'moll/vim-bbye'
-Plug 'bfredl/nvim-miniyank'
-	map p <Plug>(miniyank-autoput)
-	map P <Plug>(miniyank-autoPut)
-	map <leader>p <Plug>(miniyank-startput)
-	map <leader>P <Plug>(miniyank-startPut)
-	map <leader>n <Plug>(miniyank-cycle)
-	map <leader>N <Plug>(miniyank-cycleback)
-	map <Leader>c <Plug>(miniyank-tochar)
-	map <Leader>l <Plug>(miniyank-toline)
-	map <Leader>b <Plug>(miniyank-toblock)
-	let g:miniyank_filename = $HOME."/.miniyank.mpack"
-	map з <Plug>(miniyank-autoput)
-	map З <Plug>(miniyank-autoPut)
-	map <leader>з <Plug>(miniyank-startput)
-	map <leader>З <Plug>(miniyank-startPut)
-	map <leader>т <Plug>(miniyank-cycle)
-	map <leader>Т <Plug>(miniyank-cycleback)
-	map <Leader>с <Plug>(miniyank-tochar)
-	map <Leader>д <Plug>(miniyank-toline)
-	map <Leader>и <Plug>(miniyank-toblock)
 Plug 'dense-analysis/ale'
   let g:ale_set_balloons = 1
   let g:ale_linter_aliases = {'vue': ['vue', 'javascript']}
   let g:ale_linters = {'vue': ['eslint', 'vls']}
 " Unused
-" Plug 'neomake/neomake'
-" 	" Full config: when writing or reading a buffer, and on changes in insert and
-" 	" normal mode (after 1s; no delay when writing).
-" 	call neomake#configure#automake('nrwi', 500)
 " Plug 'LukeSmithxyz/vimling'
 	" nm <leader>d :call ToggleDeadKeys()<CR>
 	" imap <leader>d <esc>:call ToggleDeadKeys()<CR>a
@@ -294,10 +240,7 @@ Plug 'dense-analysis/ale'
 	" imap <leader>i <esc>:call ToggleIPA()<CR>a
 	" nm <leader>q :call ToggleProse()<CR>
 
-
 " Searching
-Plug 'mileszs/ack.vim'
-	let g:ackprg = 'ag --vimgrep'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
 	let g:fzf_command_prefix = 'Fzf'
@@ -398,6 +341,18 @@ call plug#end()
 """ SET COLORSCHEME """
 colo PaperColor
 
+let g:netrw_banner = 0
+let g:netrw_liststyle = 3
+let g:netrw_browse_split = 4
+let g:netrw_altv = 1
+let g:netrw_winsize = 25
+" augroup ProjectDrawer
+"   autocmd!
+"   autocmd VimEnter * :Vexplore
+" augroup END
+nmap <leader>tf :Vexplore<CR>
+nmap <leader>еа :Vexplore<CR>
+
 " My keymaps
   nmap <C-т> <C-n>
   nmap <C-з> <C-p>
@@ -409,18 +364,33 @@ colo PaperColor
 	map <leader>l g$
 	map <leader>р g^
 	map <leader>д g$
+  map ze z=
+  map яу z=
+  map gh <Nop>
+
+  " enable emacs-style line navigation in insert mode
+  inoremap <C-f> <Right>
+  inoremap <C-b> <Left>
+  inoremap <C-p> <Up>
+  noremap <C-n> <Down>
+  inoremap <C-o> <C-[>ea
+  inoremap <C-u> <C-[>gea
+  inoremap <C-e> <C-[>A
+  inoremap <C-a> <C-[>I
+  inoremap <C-q> <C-[>(i
+  inoremap <C-k> <Right><C-[>)i
 
 " Dictionary
 	vmap <leader>xx y:silent !goldendict "<C-r>0" &<CR>
 	vmap <leader>чч y:silent !goldendict "<C-r>0" &<CR>
-	vmap <leader>oe y:!setsid --fork st -g 130x40 -e mtran e -l <C-r>0<CR><C-c>
-	vmap <leader>щу y:!setsid --fork st -g 130x40 -e mtran e -l <C-r>0<CR><C-c>
-	vmap <leader>og y:!setsid --fork st -g 130x40 -e mtran g -l <C-r>0<CR><C-c>
-	vmap <leader>щп y:!setsid --fork st -g 130x40 -e mtran g -l <C-r>0<CR><C-c>
-	" vmap <leader>ole y:!setsid --fork st -g 130x40 -e lingvo e <C-r>0<CR><C-c>
-	" vmap <leader>щду y:!setsid --fork st -g 130x40 -e lingvo e <C-r>0<CR><C-c>
-	" vmap <leader>old y:!setsid --fork st -g 130x40 -e lingvo d <C-r>0<CR><C-c>
-	" vmap <leader>щдв y:!setsid --fork st -g 130x40 -e lingvo d <C-r>0<CR><C-c>
+	vmap <leader>oe y:!setsid --fork st -g 100x30 -e mtran e -l <C-r>0<CR><C-c>
+	vmap <leader>щу y:!setsid --fork st -g 100x30 -e mtran e -l <C-r>0<CR><C-c>
+	vmap <leader>og y:!setsid --fork st -g 100x30 -e mtran g -l <C-r>0<CR><C-c>
+	vmap <leader>щп y:!setsid --fork st -g 100x30 -e mtran g -l <C-r>0<CR><C-c>
+	" vmap <leader>ole y:!setsid --fork st -g 100x30 -e lingvo e <C-r>0<CR><C-c>
+	" vmap <leader>щду y:!setsid --fork st -g 100x30 -e lingvo e <C-r>0<CR><C-c>
+	" vmap <leader>old y:!setsid --fork st -g 100x30 -e lingvo d <C-r>0<CR><C-c>
+	" vmap <leader>щдв y:!setsid --fork st -g 100x30 -e lingvo d <C-r>0<CR><C-c>
 	vmap <leader>ole y:exec '!lingvo e -n <C-r>0 > /tmp/lingvo.log 2>&1'<CR><CR><CR>
 	vmap <leader>щду y:exec '!lingvo e -n <C-r>0 > /tmp/lingvo.log 2>&1'<CR><CR><CR>
 	vmap <leader>old y:exec '!lingvo d -n <C-r>0 > /tmp/lingvo.log 2>&1'<CR><CR><CR>
@@ -483,7 +453,7 @@ colo PaperColor
 " Command mode disabled
   map Q <Nop>
 	nnoremap QQ :q<CR>
-	nnoremap Йй :q<CR>
+	nnoremap ЙЙ́́́́ :q<CR>
 
 " break line
 	nmap Y i<C-m><C-[>
@@ -491,10 +461,6 @@ colo PaperColor
 
 " Searching
 	" nmap \ /
-	nmap <leader>saf :Ack!  <c-r>%<c-b><S-Right><Right>''<Left>
-	nmap <leader>ыфа :Ack!  <c-r>%<c-b><S-Right><Right>''<Left>
-	nmap <leader>saw :AckWindow!  <c-r>%<c-b><S-Right><Right>''<Left>
-	nmap <leader>ыфц :AckWindow!  <c-r>%<c-b><S-Right><Right>''<Left>
 	nmap <leader>sff mq:FzfBLines<CR>
 	nmap <leader>ыаа mq:FzfBLines<CR>
 	nmap <leader>sfw mq:FzfLines<CR>
@@ -553,20 +519,6 @@ colo PaperColor
 	    au TermClose * setlocal   relativenumber   number | q!
 	endif
 
-" Some basics:
-	nnoremap c "_c
-	set nocompatible
-	filetype plugin indent on
-  set omnifunc=syntaxcomplete#Complete
-	syntax on
-	set encoding=utf-8
-	set number relativenumber
-	" set number
-" Enable autocompletion:
-	set wildmode=longest,list,full
-" Disables automatic commenting on newline:
-	" autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
-
 " Goyo plugin makes text more readable when writing prose:
 	map <leader>agg :Goyo \| set bg=dark \| set linebreak<CR>
 	map <leader>фпп :Goyo \| set bg=dark \| set linebreak<CR>
@@ -574,9 +526,6 @@ colo PaperColor
 " Spell-check set to <leader>o, 'o' for 'orthography':
 	map <leader>cs :setlocal spell! spelllang=en_us,ru_ru<CR>
 	map <leader>сы :setlocal spell! spelllang=en_us,ru_ru<CR>
-
-" Splits open at the bottom and right, which is non-retarded, unlike vim defaults.
-	set splitbelow splitright
 
 " Shortcutting split navigation, saving a keypress:
   map <C-h> <C-w>h
@@ -624,38 +573,14 @@ colo PaperColor
 	map <leader>ap :!opout <c-r>%<CR><CR>
 	map <leader>фз :!opout <c-r>%<CR><CR>
 
-" Runs a script that cleans out tex build files whenever I close out of a .tex file.
-	autocmd VimLeave *.tex !texclear %
+" Navigating with guides
+	inoremap <leader><Tab> <Esc>/<++><Enter>"_c4l
+	vnoremap <leader><Tab> <Esc>/<++><Enter>"_c4l
+	map <leader><Tab> <Esc>/<++><Enter>"_c4l
 
-" Ensure files are read as what I want:
-	let g:vimwiki_ext2syntax = {'.Rmd': 'markdown', '.rmd': 'markdown','.md': 'markdown', '.markdown': 'markdown', '.mdown': 'markdown'}
-	let g:vimwiki_list = [{'path': '~/vimwiki', 'syntax': 'markdown', 'ext': '.md'}]
-	let g:markdown_syntax_conceal = 0
-  let g:vimwiki_global_ext = 1
-  let g:vimwiki_folding = 'custom'
-  set foldtext=MyFoldText()
-  fu! MyFoldText()
-  	let line = getline(v:foldstart)
-
-  	" markdown frontmatter -- just take the next line hoping it would be
-  	" title: Your title
-  	if line =~ '^----*$'
-  		let line = getline(v:foldstart+1)
-  	endif
-
-  	let indent = max([indent(v:foldstart)-v:foldlevel, 1])
-  	let lines = (v:foldend - v:foldstart + 1)
-  	let strip_line = substitute(line, '^//\|=\+\|["#]\|/\*\|\*/\|{{{\d\=\|title:\s*', '', 'g')
-  	let strip_line = substitute(strip_line, '^[[:space:]]*\|[[:space:]]*$', '', 'g')
-  	let text = strpart(strip_line, 0, winwidth(0) - v:foldlevel - indent - 6 - strlen(lines))
-  	if strlen(strip_line) > strlen(text)
-  		let text = text.'…'
-  	endif
-  	return repeat('▧', v:foldlevel) . repeat(' ', indent) . text .' ('. lines .')'
-  endfu
-	autocmd BufRead,BufNewFile /tmp/calcurse*,~/.calcurse/notes/* set filetype=markdown
-	autocmd BufRead,BufNewFile *.ms,*.me,*.mom,*.man set filetype=groff
-	autocmd BufRead,BufNewFile *.tex set filetype=tex
+	inoremap <leader>^ <Esc>/<+-><Enter>"_c4l
+	vnoremap <leader>^ <Esc>/<+-><Enter>"_c4l
+	map <leader>^ <Esc>/<+-><Enter>"_c4l
 
 " " Copy selected text to system clipboard (requires gvim/nvim/vim-x11 installed):
 " 	vnoremap <C-c> "+y
@@ -675,18 +600,15 @@ colo PaperColor
 " Run xrdb whenever Xdefaults or Xresources are updated.
 	autocmd BufWritePost *Xresources,*Xdefaults !xrdb %
 
-" Navigating with guides
-	inoremap <leader><Tab> <Esc>/<++><Enter>"_c4l
-	vnoremap <leader><Tab> <Esc>/<++><Enter>"_c4l
-	map <leader><Tab> <Esc>/<++><Enter>"_c4l
-
-	inoremap <leader>^ <Esc>/<+-><Enter>"_c4l
-	vnoremap <leader>^ <Esc>/<+-><Enter>"_c4l
-	map <leader>^ <Esc>/<+-><Enter>"_c4l
+	autocmd BufRead,BufNewFile /tmp/calcurse*,~/.calcurse/notes/* set filetype=markdown
+	autocmd BufRead,BufNewFile *.ms,*.me,*.mom,*.man set filetype=groff
+	autocmd BufRead,BufNewFile *.tex set filetype=tex
 
 """LATEX
 	au BufNewFile,BufRead *.tex set tabstop=2 | set softtabstop=2 | set shiftwidth=2 | set textwidth=79 | set expandtab | set autoindent | set fileformat=unix
 	au InsertLeave *.tex w
+" Runs a script that cleans out tex build files whenever I close out of a .tex file.
+	autocmd VimLeave *.tex !texclear %
 
 	fu! TEX()
 		" Word count:
@@ -728,7 +650,6 @@ colo PaperColor
 		inoremap <buffer> ,col \begin{columns}[T]<Enter>\begin{column}{.5\textwidth}<Enter><Enter>\end{column}<Enter>\begin{column}{.5\textwidth}<Enter><++><Enter>\end{column}<Enter>\end{columns}<Esc>5kA
 		inoremap <buffer> ,rn (\ref{})<++><Esc>F}i
 	endfu
-
   au FileType tex call TEX()
 
 """HTML
@@ -779,7 +700,6 @@ colo PaperColor
     inoremap <buffer> ò &ograve;
     inoremap <buffer> ù &ugrave;
   endfu
-
   au FileType html call HTML()
 
 """.bib
@@ -793,27 +713,27 @@ colo PaperColor
 	function! MD()
     map <buffer> <leader>W yiWi[<esc>Ea](<esc>pa)
     map <buffer> <leader>Ц yiWi[<esc>Ea](<esc>pa)
-    inoremap <buffer> \n ---<Enter><Enter>
-    inoremap <buffer> \т ---<Enter><Enter>
-    inoremap <buffer> \b ****<++><Esc>F*hi
-    inoremap <buffer> \и ****<++><Esc>F*hi
-    inoremap <buffer> \c **<++><Esc>F*i
-    inoremap <buffer> \с **<++><Esc>F*i
-    inoremap <buffer> \s ~~~~<++><Esc>F~hi
-    inoremap <buffer> \ы ~~~~<++><Esc>F~hi
-    inoremap <buffer> \e **<++><Esc>F*i
-    inoremap <buffer> \у **<++><Esc>F*i
-    inoremap <buffer> \i ![](<++>)<++><Esc>F[a
-    inoremap <buffer> \ш ![](<++>)<++><Esc>F[a
-    inoremap <buffer> \a [](<++>)<++><Esc>F[a
-    inoremap <buffer> \ф [](<++>)<++><Esc>F[a
-    inoremap <buffer> \1 #<Space><Enter><++><Esc>kA
-    inoremap <buffer> \2 ##<Space><Enter><++><Esc>kA
-    inoremap <buffer> \3 ###<Space><Enter><++><Esc>kA
-    inoremap <buffer> \l --------<Enter>
-    inoremap <buffer> \д --------<Enter>
-    inoremap <buffer> \p <++>
-    inoremap <buffer> \з <++>
+    inoremap <buffer> ,n ---<Enter><Enter>
+    inoremap <buffer> ,т ---<Enter><Enter>
+    inoremap <buffer> ,b ****<++><Esc>F*hi
+    inoremap <buffer> ,и ****<++><Esc>F*hi
+    inoremap <buffer> ,c **<++><Esc>F*i
+    inoremap <buffer> ,с **<++><Esc>F*i
+    inoremap <buffer> ,s ~~~~<++><Esc>F~hi
+    inoremap <buffer> ,ы ~~~~<++><Esc>F~hi
+    inoremap <buffer> ,e **<++><Esc>F*i
+    inoremap <buffer> ,у **<++><Esc>F*i
+    inoremap <buffer> ,i ![](<++>)<++><Esc>F[a
+    inoremap <buffer> ,ш ![](<++>)<++><Esc>F[a
+    inoremap <buffer> ,a [](<++>)<++><Esc>F[a
+    inoremap <buffer> ,ф [](<++>)<++><Esc>F[a
+    inoremap <buffer> ,1 #<Space><Enter><++><Esc>kA
+    inoremap <buffer> ,2 ##<Space><Enter><++><Esc>kA
+    inoremap <buffer> ,3 ###<Space><Enter><++><Esc>kA
+    inoremap <buffer> ,l --------<Enter>
+    inoremap <buffer> ,д --------<Enter>
+    inoremap <buffer> ,p <++>
+    inoremap <buffer> ,з <++>
     "
     " inoremap ,h ====<Space><++><Esc>F=hi
     " inoremap ,r ```{r}<CR>```<CR><CR><esc>2kO
