@@ -45,6 +45,7 @@ set synmaxcol=200
 set regexpengine=1
 
 " Appearance
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 set termguicolors
 set t_Co=256
 set bg=dark
@@ -72,11 +73,12 @@ endif
 
 call plug#begin('~/.config/nvim/plugged')
 " Visuals
+Plug 'mhinz/vim-startify'
 Plug 'nikvdp/neomux'
 Plug 'shinchu/lightline-gruvbox.vim'
 Plug 'itchyny/lightline.vim'
 	let g:lightline = {
-			\ 'colorscheme' : 'deus',
+			\ 'colorscheme' : 'PaperColor',
 			\ 'active' : {
 			\ 	'left' : [ [ 'mode', 'paste' ],
 			\		[ 'gitbranch', 'readonly', 'filename', 'modified', 'winnum' ] ]
@@ -91,17 +93,13 @@ Plug 'morhetz/gruvbox'
   let g:gruvbox_termcolors = 256
   let g:gruvbox_contrast_dark = 'hard'
   let g:gruvbox_contrast_light = 'hard'
-Plug 'iCyMind/NeoSolarized'
-	let g:neosolarized_contrast = 'high'
-	let g:neosolarized_vertSplitBgTrans = 1
-	let g:neosolarized_bold = 1
-	let g:neosolarized_underline = 1
-	let g:neosolarized_italic = 1
 Plug 'NLKNguyen/papercolor-theme'
 	let g:PaperColor_Theme_Options = {
 	  \   'theme': {
 	  \     'default': {
-	  \       'transparent_background': 0
+	  \       'transparent_background': 0,
+    \       'allow_italic': 1,
+    \       'allow_bold': 1
 	  \     }
 	  \   }
 	  \ }
