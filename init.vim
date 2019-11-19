@@ -1,22 +1,7 @@
 let mapleader =" "
 let maplocalleader ="-"
-
-" Original langmap for russian
-" set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz
-" Langmap with more keys
-" set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯЖЭБЮ;ABCDEFGHIJKLMNOPQRSTUVWXYZ:\"\<\>,фисвуапршолдьтщзйкыегмцчняжэ;abcdefghijklmnopqrstuvwxyz\;'
-
-" Dvorak langmap
-" set langmap=ЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮ;\\,"\<\>PYFGCRL?+AOEUIDHTNS_:QJKXBMWVZ,йцукенгшщзхъфывапролджэячсмитьбю\.;\'\,\.pyfgcrl/=aoeuidhtns-\;qjkxbmwvz
-
-set keymap=russian-dvorak
-nnoremap <C-q> /<C-^><C-c>
-vnoremap <C-q> /<C-^><C-c>
-inoremap <C-q> <C-^>
-cmap <C-q> <C-^>
-set ttimeoutlen=50
-set iminsert=0
-set imsearch=-1
+set guicursor=
+let $VTE_VERSION="100"
 
 let g:netrw_banner = 0
 let g:netrw_liststyle = 3
@@ -50,6 +35,23 @@ set dictionary+=/usr/share/dict/ru
 set noshowmode
 set noswapfile
 set completeopt+=preview
+set title titlelen=0 titlestring=%<%F%=%(\ %)\|%(\ %)%l/%L-%P
+" set title titlestring=%<%F%= titlelen=0
+map ze z=
+map яу z=
+map gh <Nop>
+
+" enable emacs-style line navigation in insert mode
+inoremap <C-f> <Right>
+inoremap <C-b> <Left>
+inoremap <C-p> <Up>
+noremap <C-n> <Down>
+inoremap <C-o> <C-[>ea
+inoremap <C-u> <C-[>gea
+inoremap <C-e> <C-[>A
+inoremap <C-a> <C-[>I
+inoremap <C-q> <C-[>(i
+inoremap <C-k> <Right><C-[>)i
 
 if ! filereadable(expand('~/.config/nvim/autoload/plug.vim'))
 	echo "Downloading junegunn/vim-plug to manage plugins..."
@@ -58,23 +60,39 @@ if ! filereadable(expand('~/.config/nvim/autoload/plug.vim'))
 endif
 
 call plug#begin('~/.config/nvim/plugged')
-Plug 'dense-analysis/ale'
-let g:ale_set_balloons = 1
-let g:ale_linter_aliases = {'vue': ['vue', 'javascript']}
-let g:ale_linters = {'vue': ['eslint', 'vls']}
 " Visuals
+Plug 'nikvdp/neomux'
 Plug 'shinchu/lightline-gruvbox.vim'
+Plug 'mengelbrecht/lightline-bufferline'
 Plug 'itchyny/lightline.vim'
+  set showtabline=2
 	let g:lightline = {
 			\ 'colorscheme' : 'deus',
 			\ 'active' : {
 			\ 	'left' : [ [ 'mode', 'paste' ],
-			\		[ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+			\		[ 'gitbranch', 'readonly', 'filename', 'modified', 'winnum' ] ]
 			\ },
 			\ 'component_function' : {
-			\	'gitbranch' : 'fugitive#head'
+			\	'gitbranch' : 'fugitive#head',
+      \ 'winnum' : 'WindowNumber'
 			\ },
 			\ }
+  let g:lightline#bufferline#show_number  = 2
+  let g:lightline#bufferline#shorten_path = 0
+  let g:lightline#bufferline#unnamed      = '[No Name]'
+  let g:lightline.tabline          = {'left': [['buffers']], 'right': [['close']]}
+  let g:lightline.component_expand = {'buffers': 'lightline#bufferline#buffers'}
+  let g:lightline.component_type   = {'buffers': 'tabsel'}
+  nmap <Leader>1 <Plug>lightline#bufferline#go(1)
+  nmap <Leader>2 <Plug>lightline#bufferline#go(2)
+  nmap <Leader>3 <Plug>lightline#bufferline#go(3)
+  nmap <Leader>4 <Plug>lightline#bufferline#go(4)
+  nmap <Leader>5 <Plug>lightline#bufferline#go(5)
+  nmap <Leader>6 <Plug>lightline#bufferline#go(6)
+  nmap <Leader>7 <Plug>lightline#bufferline#go(7)
+  nmap <Leader>8 <Plug>lightline#bufferline#go(8)
+  nmap <Leader>9 <Plug>lightline#bufferline#go(9)
+  nmap <Leader>0 <Plug>lightline#bufferline#go(10)
 Plug 'morhetz/gruvbox'
   let g:gruvbox_italic = 1
   let g:gruvbox_termcolors = 256
@@ -87,17 +105,25 @@ Plug 'iCyMind/NeoSolarized'
 	let g:neosolarized_underline = 1
 	let g:neosolarized_italic = 1
 Plug 'NLKNguyen/papercolor-theme'
-	" let g:PaperColor_Theme_Options = {
-	"   \   'theme': {
-	"   \     'default': {
-	"   \       'transparent_background': 1
-	"   \     }
-	"   \   }
-	"   \ }
+	let g:PaperColor_Theme_Options = {
+	  \   'theme': {
+	  \     'default': {
+	  \       'transparent_background': 0
+	  \     }
+	  \   }
+	  \ }
 Plug 'nathanaelkane/vim-indent-guides'
 	let g:indent_guides_enable_on_vim_startup = 1
 
 " Syntax
+Plug 'neovimhaskell/haskell-vim'
+  let g:haskell_enable_quantification = 1   " to enable highlighting of `forall`
+  let g:haskell_enable_recursivedo = 1      " to enable highlighting of `mdo` and `rec`
+  let g:haskell_enable_arrowsyntax = 1      " to enable highlighting of `proc`
+  let g:haskell_enable_pattern_synonyms = 1 " to enable highlighting of `pattern`
+  let g:haskell_enable_typeroles = 1        " to enable highlighting of type roles
+  let g:haskell_enable_static_pointers = 1  " to enable highlighting of `static`
+  let g:haskell_backpack = 1                " to enable highlighting of backpack keywords
 Plug 'digitaltoad/vim-pug'
 Plug 'sheerun/vim-polyglot'
 	let g:polyglot_disabled = ['vue', 'markdown']
@@ -107,8 +133,9 @@ Plug 'posva/vim-vue'
 Plug 'chrisbra/Colorizer'
 	let g:colorizer_auto_color = 1
 	let g:colorizer_auto_filetype='css,scss,sass,html,pug,vue'
+" Plug 'dkarter/bullets.vim'
 Plug 'vimwiki/vimwiki'
-Plug 'vim-pandoc/vim-pandoc'
+" Plug 'vim-pandoc/vim-pandoc'
   " map aS
   " map iS
   " map <localleader>i
@@ -144,13 +171,13 @@ Plug 'vim-pandoc/vim-pandoc'
   " map <localleader>lcf
   " map <localleader>lcl
   " map <localleader>lcn
-Plug 'vim-pandoc/vim-pandoc-syntax'
-	let g:pandoc#filetypes#handled = ["pandoc", "markdown"]
-	let g:pandoc#filetypes#pandoc_markdown = 1
-	let g:pandoc#spell#enabled = 0
-"	let g:pandoc#formatting#mode ="ha"
-"	let g:pandoc#folding#level = 1
-	let g:pandoc#folding#fold_yaml = 1
+" Plug 'vim-pandoc/vim-pandoc-syntax'
+" 	let g:pandoc#filetypes#handled = ["pandoc", "markdown"]
+" 	let g:pandoc#filetypes#pandoc_markdown = 1
+" 	let g:pandoc#spell#enabled = 0
+" "	let g:pandoc#formatting#mode ="ha"
+" "	let g:pandoc#folding#level = 1
+" 	let g:pandoc#folding#fold_yaml = 1
 Plug 'lervag/vimtex'
     let g:vimtex_quickfix_enabled = 0
     let g:vimtex_compiler_progname = 'nvr'
@@ -180,7 +207,7 @@ Plug 'lervag/vimtex'
         \}
 
 " Movement
-" Plug 'Teu5us/vim-plugin-ruscmd'
+Plug 'Teu5us/vim-plugin-ruscmd'
 Plug 'easymotion/vim-easymotion'
 	map <leader>jw <Plug>(easymotion-bd-w)
 	map <leader>оц <Plug>(easymotion-bd-w)
@@ -194,6 +221,10 @@ Plug 'equalsraf/neovim-gui-shim'
 Plug 'prabirshrestha/async.vim'
 
 " Commands
+Plug 'mbbill/undotree'
+  map <leader>ut :UndotreeToggle<CR>
+  map <leader>ге :UndotreeToggle<CR>
+Plug 'chrisbra/changesPlugin'
 Plug 'tomtom/tcomment_vim'
   map пс gc
   map псс gcc
@@ -247,6 +278,10 @@ Plug 'bfredl/nvim-miniyank'
 	map <Leader>с <Plug>(miniyank-tochar)
 	map <Leader>д <Plug>(miniyank-toline)
 	map <Leader>и <Plug>(miniyank-toblock)
+Plug 'dense-analysis/ale'
+  let g:ale_set_balloons = 1
+  let g:ale_linter_aliases = {'vue': ['vue', 'javascript']}
+  let g:ale_linters = {'vue': ['eslint', 'vls']}
 " Unused
 " Plug 'neomake/neomake'
 " 	" Full config: when writing or reading a buffer, and on changes in insert and
@@ -361,7 +396,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
 
 """ SET COLORSCHEME """
-colo gruvbox
+colo PaperColor
 
 " My keymaps
   nmap <C-т> <C-n>
@@ -396,6 +431,8 @@ colo gruvbox
 	nmap <leader>щдв yviw:exec '!lingvo d -n <C-r>0 > /tmp/lingvo.log 2>&1'<CR><CR><CR>
   nmap <leader>otb :botright pedit +:setl\ autoread /tmp/lingvo.log<CR>
   nmap <leader>щеи :botright pedit +:setl\ autoread /tmp/lingvo.log<CR>
+  vmap <leader>ats "qyo<C-[>o<C-[>O<C-h>==> TRANS:<C-[>gcc:r !echo '<C-r>q' \| trans -brief<space>
+  vmap <leader>феы "qyo<C-[>o<C-[>O<C-h>==> TRANS:<C-[>gcc:r !echo '<C-r>q' \| trans -brief<space>
 
 " Opening files
 	nmap <leader>ff :FzfFiles<CR>
@@ -474,8 +511,8 @@ colo gruvbox
 	nmap <leader>ыь :FzfMarks<CR>
 	nmap <leader>ac :FzfCommands<CR>
 	nmap <leader>фс :FzfCommands<CR>
-	nmap <leader>sb :buffers<CR>:buf<C-b>
-	nmap <leader>ыи :buffers<CR>:buf<C-b>
+	nmap <leader>sb :FzfBuffers<CR>
+	nmap <leader>ыи :FzfBuffers<CR>
 	nmap <leader>st :tabs<CR>
 	nmap <leader>ые :tabs<CR>
 
@@ -486,8 +523,8 @@ colo gruvbox
 	nmap <leader>еЦ :set nowrap<CR>
 
 " Apps
-	nmap <leader>at :vs \| :terminal<CR>:file term<CR>:set  norelativenumber nonumber<CR>i
-	nmap <leader>фе :vs \| :terminal<CR>:file term<CR>:set  norelativenumber nonumber<CR>i
+	" nmap <leader>at :vs \| :terminal<CR>:file term<CR>:set  norelativenumber nonumber<CR>i
+	" nmap <leader>фе :vs \| :terminal<CR>:file term<CR>:set  norelativenumber nonumber<CR>i
 	nmap <leader>atv :vs \| :terminal<CR>:file term<CR>:set  norelativenumber nonumber<CR>i
 	nmap <leader>фем :vs \| :terminal<CR>:file term<CR>:set  norelativenumber nonumber<CR>i
 	nmap <leader>ath :12split \| :terminal<CR>:file term<CR>:set  norelativenumber nonumber<CR>i
@@ -519,7 +556,7 @@ colo gruvbox
 " Some basics:
 	nnoremap c "_c
 	set nocompatible
-	filetype plugin on
+	filetype plugin indent on
   set omnifunc=syntaxcomplete#Complete
 	syntax on
 	set encoding=utf-8
@@ -528,15 +565,15 @@ colo gruvbox
 " Enable autocompletion:
 	set wildmode=longest,list,full
 " Disables automatic commenting on newline:
-	autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+	" autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
 " Goyo plugin makes text more readable when writing prose:
 	map <leader>agg :Goyo \| set bg=dark \| set linebreak<CR>
 	map <leader>фпп :Goyo \| set bg=dark \| set linebreak<CR>
 
 " Spell-check set to <leader>o, 'o' for 'orthography':
-	map <leader>cs :setlocal spell! spelllang=en_us,ru_yo<CR>
-	map <leader>сы :setlocal spell! spelllang=en_us,ru_yo<CR>
+	map <leader>cs :setlocal spell! spelllang=en_us,ru_ru<CR>
+	map <leader>сы :setlocal spell! spelllang=en_us,ru_ru<CR>
 
 " Splits open at the bottom and right, which is non-retarded, unlike vim defaults.
 	set splitbelow splitright
@@ -565,8 +602,8 @@ colo gruvbox
 
 " Replace all is aliased to S.
 	" nnoremap S :%s##g<Left><Left>
-  nmap <leader>S :%s##g<Left><Left><Left>
-  nmap <leader>Ы :%s##g<Left><Left><Left>
+  nmap <leader>S :%s##g<Left><Left>
+  nmap <leader>Ы :%s##g<Left><Left>
   vmap <leader>S :s##gc<Left><Left><Left>
   vmap <leader>Ы :s##gc<Left><Left><Left>
   vmap <leader>I :norm I
@@ -592,9 +629,30 @@ colo gruvbox
 
 " Ensure files are read as what I want:
 	let g:vimwiki_ext2syntax = {'.Rmd': 'markdown', '.rmd': 'markdown','.md': 'markdown', '.markdown': 'markdown', '.mdown': 'markdown'}
-	" let g:vimwiki_list = [{'path': '~/vimwiki', 'syntax': 'markdown', 'ext': '.md'}]
+	let g:vimwiki_list = [{'path': '~/vimwiki', 'syntax': 'markdown', 'ext': '.md'}]
 	let g:markdown_syntax_conceal = 0
-  let g:vimwiki_global_ext = 0
+  let g:vimwiki_global_ext = 1
+  let g:vimwiki_folding = 'custom'
+  set foldtext=MyFoldText()
+  fu! MyFoldText()
+  	let line = getline(v:foldstart)
+
+  	" markdown frontmatter -- just take the next line hoping it would be
+  	" title: Your title
+  	if line =~ '^----*$'
+  		let line = getline(v:foldstart+1)
+  	endif
+
+  	let indent = max([indent(v:foldstart)-v:foldlevel, 1])
+  	let lines = (v:foldend - v:foldstart + 1)
+  	let strip_line = substitute(line, '^//\|=\+\|["#]\|/\*\|\*/\|{{{\d\=\|title:\s*', '', 'g')
+  	let strip_line = substitute(strip_line, '^[[:space:]]*\|[[:space:]]*$', '', 'g')
+  	let text = strpart(strip_line, 0, winwidth(0) - v:foldlevel - indent - 6 - strlen(lines))
+  	if strlen(strip_line) > strlen(text)
+  		let text = text.'…'
+  	endif
+  	return repeat('▧', v:foldlevel) . repeat(' ', indent) . text .' ('. lines .')'
+  endfu
 	autocmd BufRead,BufNewFile /tmp/calcurse*,~/.calcurse/notes/* set filetype=markdown
 	autocmd BufRead,BufNewFile *.ms,*.me,*.mom,*.man set filetype=groff
 	autocmd BufRead,BufNewFile *.tex set filetype=tex
@@ -622,9 +680,9 @@ colo gruvbox
 	vnoremap <leader><Tab> <Esc>/<++><Enter>"_c4l
 	map <leader><Tab> <Esc>/<++><Enter>"_c4l
 
-	inoremap <leader>\ <Esc>/<+-><Enter>"_c4l
-	vnoremap <leader>\ <Esc>/<+-><Enter>"_c4l
-	map <leader>\ <Esc>/<+-><Enter>"_c4l
+	inoremap <leader>^ <Esc>/<+-><Enter>"_c4l
+	vnoremap <leader>^ <Esc>/<+-><Enter>"_c4l
+	map <leader>^ <Esc>/<+-><Enter>"_c4l
 
 """LATEX
 	au BufNewFile,BufRead *.tex set tabstop=2 | set softtabstop=2 | set shiftwidth=2 | set textwidth=79 | set expandtab | set autoindent | set fileformat=unix
@@ -632,87 +690,87 @@ colo gruvbox
 	" Word count:
 	" autocmd FileType tex map <leader>W :w !detex \| wc -w<CR>
 	" Code snippets
-	autocmd FileType tex inoremap ,fr \begin{frame}<Enter>\frametitle{}<Enter><Enter><++><Enter><Enter>\end{frame}<Enter><Enter><++><Esc>6kf}i
-	autocmd FileType tex inoremap ,fi \begin{fitch}<Enter><Enter>\end{fitch}<Enter><Enter><++><Esc>3kA
-	autocmd FileType tex inoremap ,exe \begin{exe}<Enter>\ex<Space><Enter>\end{exe}<Enter><Enter><++><Esc>3kA
-	autocmd FileType tex inoremap ,em \emph{}<++><Esc>T{i
-	autocmd FileType tex inoremap ,bf \textbf{}<++><Esc>T{i
-	autocmd FileType tex vnoremap , <ESC>`<i\{<ESC>`>2la}<ESC>?\\{<Enter>a
-	autocmd FileType tex inoremap ,it \textit{}<++><Esc>T{i
-	autocmd FileType tex inoremap ,ct \textcite{}<++><Esc>T{i
-	autocmd FileType tex inoremap ,cp \parencite{}<++><Esc>T{i
-	autocmd FileType tex inoremap ,glos {\gll<Space><++><Space>\\<Enter><++><Space>\\<Enter>\trans{``<++>''}}<Esc>2k2bcw
-	autocmd FileType tex inoremap ,x \begin{xlist}<Enter>\ex<Space><Enter>\end{xlist}<Esc>kA<Space>
-	autocmd FileType tex inoremap ,ol \begin{enumerate}<Enter><Enter>\end{enumerate}<Enter><Enter><++><Esc>3kA\item<Space>
-	autocmd FileType tex inoremap ,ul \begin{itemize}<Enter><Enter>\end{itemize}<Enter><Enter><++><Esc>3kA\item<Space>
-	autocmd FileType tex inoremap ,li <Enter>\item<Space>
-	autocmd FileType tex inoremap ,ref \ref{}<Space><++><Esc>T{i
-	autocmd FileType tex inoremap ,tab \begin{tabular}<Enter><++><Enter>\end{tabular}<Enter><Enter><++><Esc>4kA{}<Esc>i
-	autocmd FileType tex inoremap ,ot \begin{tableau}<Enter>\inp{<++>}<Tab>\const{<++>}<Tab><++><Enter><++><Enter>\end{tableau}<Enter><Enter><++><Esc>5kA{}<Esc>i
-	autocmd FileType tex inoremap ,can \cand{}<Tab><++><Esc>T{i
-	autocmd FileType tex inoremap ,con \const{}<Tab><++><Esc>T{i
-	autocmd FileType tex inoremap ,v \vio{}<Tab><++><Esc>T{i
-	autocmd FileType tex inoremap ,a \href{}{<++>}<Space><++><Esc>2T{i
-	autocmd FileType tex inoremap ,sc \textsc{}<Space><++><Esc>T{i
-	autocmd FileType tex inoremap ,chap \chapter{}<Enter><Enter><++><Esc>2kf}i
-	autocmd FileType tex inoremap ,sec \section{}<Enter><Enter><++><Esc>2kf}i
-	autocmd FileType tex inoremap ,ssec \subsection{}<Enter><Enter><++><Esc>2kf}i
-	autocmd FileType tex inoremap ,sssec \subsubsection{}<Enter><Enter><++><Esc>2kf}i
-	autocmd FileType tex inoremap ,st <Esc>F{i*<Esc>f}i
-	autocmd FileType tex inoremap ,beg \begin{DELRN}<Enter><++><Enter>\end{DELRN}<Enter><Enter><++><Esc>4k0fR:MultipleCursorsFind<Space>DELRN<Enter>c
-	autocmd FileType tex inoremap ,up <Esc>/usepackage<Enter>o\usepackage{}<Esc>i
-	autocmd FileType tex nnoremap ,up /usepackage<Enter>o\usepackage{}<Esc>i
-	autocmd FileType tex inoremap ,tt \texttt{}<Space><++><Esc>T{i
-	autocmd FileType tex inoremap ,bt {\blindtext}
-	autocmd FileType tex inoremap ,nu $\varnothing$
-	autocmd FileType tex inoremap ,col \begin{columns}[T]<Enter>\begin{column}{.5\textwidth}<Enter><Enter>\end{column}<Enter>\begin{column}{.5\textwidth}<Enter><++><Enter>\end{column}<Enter>\end{columns}<Esc>5kA
-	autocmd FileType tex inoremap ,rn (\ref{})<++><Esc>F}i
+	autocmd FileType tex inoremap <buffer> ,fr \begin{frame}<Enter>\frametitle{}<Enter><Enter><++><Enter><Enter>\end{frame}<Enter><Enter><++><Esc>6kf}i
+	autocmd FileType tex inoremap <buffer> ,fi \begin{fitch}<Enter><Enter>\end{fitch}<Enter><Enter><++><Esc>3kA
+	autocmd FileType tex inoremap <buffer> ,exe \begin{exe}<Enter>\ex<Space><Enter>\end{exe}<Enter><Enter><++><Esc>3kA
+	autocmd FileType tex inoremap <buffer> ,em \emph{}<++><Esc>T{i
+	autocmd FileType tex inoremap <buffer> ,bf \textbf{}<++><Esc>T{i
+	autocmd FileType tex vnoremap <buffer> , <ESC>`<i\{<ESC>`>2la}<ESC>?\\{<Enter>a
+	autocmd FileType tex inoremap <buffer> ,it \textit{}<++><Esc>T{i
+	autocmd FileType tex inoremap <buffer> ,ct \textcite{}<++><Esc>T{i
+	autocmd FileType tex inoremap <buffer> ,cp \parencite{}<++><Esc>T{i
+	autocmd FileType tex inoremap <buffer> ,glos {\gll<Space><++><Space>\\<Enter><++><Space>\\<Enter>\trans{``<++>''}}<Esc>2k2bcw
+	autocmd FileType tex inoremap <buffer> ,x \begin{xlist}<Enter>\ex<Space><Enter>\end{xlist}<Esc>kA<Space>
+	autocmd FileType tex inoremap <buffer> ,ol \begin{enumerate}<Enter><Enter>\end{enumerate}<Enter><Enter><++><Esc>3kA\item<Space>
+	autocmd FileType tex inoremap <buffer> ,ul \begin{itemize}<Enter><Enter>\end{itemize}<Enter><Enter><++><Esc>3kA\item<Space>
+	autocmd FileType tex inoremap <buffer> ,li <Enter>\item<Space>
+	autocmd FileType tex inoremap <buffer> ,ref \ref{}<Space><++><Esc>T{i
+	autocmd FileType tex inoremap <buffer> ,tab \begin{tabular}<Enter><++><Enter>\end{tabular}<Enter><Enter><++><Esc>4kA{}<Esc>i
+	autocmd FileType tex inoremap <buffer> ,ot \begin{tableau}<Enter>\inp{<++>}<Tab>\const{<++>}<Tab><++><Enter><++><Enter>\end{tableau}<Enter><Enter><++><Esc>5kA{}<Esc>i
+	autocmd FileType tex inoremap <buffer> ,can \cand{}<Tab><++><Esc>T{i
+	autocmd FileType tex inoremap <buffer> ,con \const{}<Tab><++><Esc>T{i
+	autocmd FileType tex inoremap <buffer> ,v \vio{}<Tab><++><Esc>T{i
+	autocmd FileType tex inoremap <buffer> ,a \href{}{<++>}<Space><++><Esc>2T{i
+	autocmd FileType tex inoremap <buffer> ,sc \textsc{}<Space><++><Esc>T{i
+	autocmd FileType tex inoremap <buffer> ,chap \chapter{}<Enter><Enter><++><Esc>2kf}i
+	autocmd FileType tex inoremap <buffer> ,sec \section{}<Enter><Enter><++><Esc>2kf}i
+	autocmd FileType tex inoremap <buffer> ,ssec \subsection{}<Enter><Enter><++><Esc>2kf}i
+	autocmd FileType tex inoremap <buffer> ,sssec \subsubsection{}<Enter><Enter><++><Esc>2kf}i
+	autocmd FileType tex inoremap <buffer> ,st <Esc>F{i*<Esc>f}i
+	autocmd FileType tex inoremap <buffer> ,beg \begin{DELRN}<Enter><++><Enter>\end{DELRN}<Enter><Enter><++><Esc>4k0fR:MultipleCursorsFind<Space>DELRN<Enter>c
+	autocmd FileType tex inoremap <buffer> ,up <Esc>/usepackage<Enter>o\usepackage{}<Esc>i
+	autocmd FileType tex nnoremap <buffer> ,up /usepackage<Enter>o\usepackage{}<Esc>i
+	autocmd FileType tex inoremap <buffer> ,tt \texttt{}<Space><++><Esc>T{i
+	autocmd FileType tex inoremap <buffer> ,bt {\blindtext}
+	autocmd FileType tex inoremap <buffer> ,nu $\varnothing$
+	autocmd FileType tex inoremap <buffer> ,col \begin{columns}[T]<Enter>\begin{column}{.5\textwidth}<Enter><Enter>\end{column}<Enter>\begin{column}{.5\textwidth}<Enter><++><Enter>\end{column}<Enter>\end{columns}<Esc>5kA
+	autocmd FileType tex inoremap <buffer> ,rn (\ref{})<++><Esc>F}i
 
 """HTML
 	au BufNewFile,BufRead *.html set tabstop=2 | set softtabstop=2 | set shiftwidth=2 | set textwidth=150 | set expandtab | set autoindent | set fileformat=unix
-	autocmd FileType html inoremap ,b <b></b><Esc>FbT>i
-	autocmd FileType html inoremap ,it <em></em><Esc>FeT>i
-	autocmd FileType html inoremap ,1 <h1></h1><Esc>2kf<i
-	autocmd FileType html inoremap ,2 <h2></h2><Esc>2kf<i
-	autocmd FileType html inoremap ,3 <h3></h3><Esc>2kf<i
-	autocmd FileType html inoremap ,p <p></p><Esc>0f>a
-	autocmd FileType html inoremap ,a <a<Space>href=""><++></a><Esc>14hi
-	autocmd FileType html inoremap ,e <a<Space>target="_blank"<Space>href=""><++></a><Esc>14hi
-	autocmd FileType html inoremap ,ul <ul><Enter><li></li><Enter></ul><Enter><Enter><++><Esc>03kf<i
-	autocmd FileType html inoremap ,li <Esc>o<li></li><Esc>F>a
-	autocmd FileType html inoremap ,ol <ol><Enter><li></li><Enter></ol><Enter><Enter><++><Esc>03kf<i
-	autocmd FileType html inoremap ,im <img src="" alt="<++>"><++><esc>Fcf"a
-	autocmd FileType html inoremap ,td <td></td><++><Esc>Fdcit
-	autocmd FileType html inoremap ,tr <tr></tr><Enter><++><Esc>kf<i
-	autocmd FileType html inoremap ,th <th></th><++><Esc>Fhcit
-	autocmd FileType html inoremap ,tab <table><Enter></table><Esc>O
-	autocmd FileType html inoremap ,gr <font color="green"></font><Esc>F>a
-	autocmd FileType html inoremap ,rd <font color="red"></font><Esc>F>a
-	autocmd FileType html inoremap ,yl <font color="yellow"></font><Esc>F>a
-	autocmd FileType html inoremap ,dt <dt></dt><Enter><dd><++></dd><Enter><++><esc>2kcit
-	autocmd FileType html inoremap ,dl <dl><Enter><Enter></dl><enter><enter><++><esc>3kcc
-	autocmd FileType html inoremap &<space> &amp;<space>
-	autocmd FileType html inoremap á &aacute;
-	autocmd FileType html inoremap é &eacute;
-	autocmd FileType html inoremap í &iacute;
-	autocmd FileType html inoremap ó &oacute;
-	autocmd FileType html inoremap ú &uacute;
-	autocmd FileType html inoremap ä &auml;
-	autocmd FileType html inoremap ë &euml;
-	autocmd FileType html inoremap ï &iuml;
-	autocmd FileType html inoremap ö &ouml;
-	autocmd FileType html inoremap ü &uuml;
-	autocmd FileType html inoremap ã &atilde;
-	autocmd FileType html inoremap ẽ &etilde;
-	autocmd FileType html inoremap ĩ &itilde;
-	autocmd FileType html inoremap õ &otilde;
-	autocmd FileType html inoremap ũ &utilde;
-	autocmd FileType html inoremap ñ &ntilde;
-	autocmd FileType html inoremap à &agrave;
-	autocmd FileType html inoremap è &egrave;
-	autocmd FileType html inoremap ì &igrave;
-	autocmd FileType html inoremap ò &ograve;
-	autocmd FileType html inoremap ù &ugrave;
+	autocmd FileType html inoremap <buffer> ,b <b></b><Esc>FbT>i
+	autocmd FileType html inoremap <buffer> ,it <em></em><Esc>FeT>i
+	autocmd FileType html inoremap <buffer> ,1 <h1></h1><Esc>2kf<i
+	autocmd FileType html inoremap <buffer> ,2 <h2></h2><Esc>2kf<i
+	autocmd FileType html inoremap <buffer> ,3 <h3></h3><Esc>2kf<i
+	autocmd FileType html inoremap <buffer> ,p <p></p><Esc>0f>a
+	autocmd FileType html inoremap <buffer> ,a <a<Space>href=""><++></a><Esc>14hi
+	autocmd FileType html inoremap <buffer> ,e <a<Space>target="_blank"<Space>href=""><++></a><Esc>14hi
+	autocmd FileType html inoremap <buffer> ,ul <ul><Enter><li></li><Enter></ul><Enter><Enter><++><Esc>03kf<i
+	autocmd FileType html inoremap <buffer> ,li <Esc>o<li></li><Esc>F>a
+	autocmd FileType html inoremap <buffer> ,ol <ol><Enter><li></li><Enter></ol><Enter><Enter><++><Esc>03kf<i
+	autocmd FileType html inoremap <buffer> ,im <img src="" alt="<++>"><++><esc>Fcf"a
+	autocmd FileType html inoremap <buffer> ,td <td></td><++><Esc>Fdcit
+	autocmd FileType html inoremap <buffer> ,tr <tr></tr><Enter><++><Esc>kf<i
+	autocmd FileType html inoremap <buffer> ,th <th></th><++><Esc>Fhcit
+	autocmd FileType html inoremap <buffer> ,tab <table><Enter></table><Esc>O
+	autocmd FileType html inoremap <buffer> ,gr <font color="green"></font><Esc>F>a
+	autocmd FileType html inoremap <buffer> ,rd <font color="red"></font><Esc>F>a
+	autocmd FileType html inoremap <buffer> ,yl <font color="yellow"></font><Esc>F>a
+	autocmd FileType html inoremap <buffer> ,dt <dt></dt><Enter><dd><++></dd><Enter><++><esc>2kcit
+	autocmd FileType html inoremap <buffer> ,dl <dl><Enter><Enter></dl><enter><enter><++><esc>3kcc
+	autocmd FileType html inoremap <buffer> &<space> &amp;<space>
+	autocmd FileType html inoremap <buffer> á &aacute;
+	autocmd FileType html inoremap <buffer> é &eacute;
+	autocmd FileType html inoremap <buffer> í &iacute;
+	autocmd FileType html inoremap <buffer> ó &oacute;
+	autocmd FileType html inoremap <buffer> ú &uacute;
+	autocmd FileType html inoremap <buffer> ä &auml;
+	autocmd FileType html inoremap <buffer> ë &euml;
+	autocmd FileType html inoremap <buffer> ï &iuml;
+	autocmd FileType html inoremap <buffer> ö &ouml;
+	autocmd FileType html inoremap <buffer> ü &uuml;
+	autocmd FileType html inoremap <buffer> ã &atilde;
+	autocmd FileType html inoremap <buffer> ẽ &etilde;
+	autocmd FileType html inoremap <buffer> ĩ &itilde;
+	autocmd FileType html inoremap <buffer> õ &otilde;
+	autocmd FileType html inoremap <buffer> ũ &utilde;
+	autocmd FileType html inoremap <buffer> ñ &ntilde;
+	autocmd FileType html inoremap <buffer> à &agrave;
+	autocmd FileType html inoremap <buffer> è &egrave;
+	autocmd FileType html inoremap <buffer> ì &igrave;
+	autocmd FileType html inoremap <buffer> ò &ograve;
+	autocmd FileType html inoremap <buffer> ù &ugrave;
 
 """.bib
 	autocmd FileType bib inoremap ,a @article{<Enter>author<Space>=<Space>{<++>},<Enter>year<Space>=<Space>{<++>},<Enter>title<Space>=<Space>{<++>},<Enter>journal<Space>=<Space>{<++>},<Enter>volume<Space>=<Space>{<++>},<Enter>pages<Space>=<Space>{<++>},<Enter>}<Enter><++><Esc>8kA,<Esc>i
@@ -720,32 +778,32 @@ colo gruvbox
 	autocmd FileType bib inoremap ,c @incollection{<Enter>author<Space>=<Space>{<++>},<Enter>title<Space>=<Space>{<++>},<Enter>booktitle<Space>=<Space>{<++>},<Enter>editor<Space>=<Space>{<++>},<Enter>year<Space>=<Space>{<++>},<Enter>publisher<Space>=<Space>{<++>},<Enter>}<Enter><++><Esc>8kA,<Esc>i
 
 "MARKDOWN
-	au FileType markdown,pandoc set tabstop=2 | set softtabstop=2 | set shiftwidth=2 | set textwidth=120 | set expandtab | set autoindent | set fileformat=unix
-	" autocmd BufEnter *.md,*.rmd set filetype=markdown
-	autocmd Filetype markdown,rmd map <leader>W yiWi[<esc>Ea](<esc>pa)
-	autocmd Filetype markdown,rmd map <leader>Ц yiWi[<esc>Ea](<esc>pa)
-	autocmd Filetype markdown,rmd inoremap ,n ---<Enter><Enter>
-	autocmd Filetype markdown,rmd inoremap ,т ---<Enter><Enter>
-	autocmd Filetype markdown,rmd inoremap ,b ****<++><Esc>F*hi
-	autocmd Filetype markdown,rmd inoremap ,и ****<++><Esc>F*hi
-	autocmd Filetype markdown,rmd inoremap ,c **<++><Esc>F*i
-	autocmd Filetype markdown,rmd inoremap ,с **<++><Esc>F*i
-	autocmd Filetype markdown,rmd inoremap ,s ~~~~<++><Esc>F~hi
-	autocmd Filetype markdown,rmd inoremap ,ы ~~~~<++><Esc>F~hi
-	autocmd Filetype markdown,rmd inoremap ,e **<++><Esc>F*i
-	autocmd Filetype markdown,rmd inoremap ,у **<++><Esc>F*i
-	" autocmd Filetype markdown,rmd inoremap ,h ====<Space><++><Esc>F=hi
-	autocmd Filetype markdown,rmd inoremap ,i ![](<++>)<++><Esc>F[a
-	autocmd Filetype markdown,rmd inoremap ,ш ![](<++>)<++><Esc>F[a
-	autocmd Filetype markdown,rmd inoremap ,a [](<++>)<++><Esc>F[a
-	autocmd Filetype markdown,rmd inoremap ,ф [](<++>)<++><Esc>F[a
-	autocmd Filetype markdown,rmd inoremap ,1 #<Space><Enter><++><Esc>kA
-	autocmd Filetype markdown,rmd inoremap ,2 ##<Space><Enter><++><Esc>kA
-	autocmd Filetype markdown,rmd inoremap ,3 ###<Space><Enter><++><Esc>kA
-	autocmd Filetype markdown,rmd inoremap ,l --------<Enter>
-	autocmd Filetype markdown,rmd inoremap ,д --------<Enter>
-	autocmd Filetype markdown,rmd inoremap ,p <++>
-	autocmd Filetype markdown,rmd inoremap ,з <++>
+	" au FileType markdown,pandoc set tabstop=2 | set softtabstop=2 | set shiftwidth=2 | set textwidth=80 | set expandtab | set autoindent | set fileformat=unix
+	" autocmd BufEnter *.rmd set filetype=pandoc
+	autocmd Filetype vimwiki map <buffer> <leader>W yiWi[<esc>Ea](<esc>pa)
+	autocmd Filetype vimwiki map <buffer> <leader>Ц yiWi[<esc>Ea](<esc>pa)
+	autocmd Filetype vimwiki inoremap <buffer> \n ---<Enter><Enter>
+	autocmd Filetype vimwiki inoremap <buffer> \т ---<Enter><Enter>
+	autocmd Filetype vimwiki inoremap <buffer> \b ****<++><Esc>F*hi
+	autocmd Filetype vimwiki inoremap <buffer> \и ****<++><Esc>F*hi
+	autocmd Filetype vimwiki inoremap <buffer> \c **<++><Esc>F*i
+	autocmd Filetype vimwiki inoremap <buffer> \с **<++><Esc>F*i
+	autocmd Filetype vimwiki inoremap <buffer> \s ~~~~<++><Esc>F~hi
+	autocmd Filetype vimwiki inoremap <buffer> \ы ~~~~<++><Esc>F~hi
+	autocmd Filetype vimwiki inoremap <buffer> \e **<++><Esc>F*i
+	autocmd Filetype vimwiki inoremap <buffer> \у **<++><Esc>F*i
+	" autocmd Filetype vimwiki inoremap ,h ====<Space><++><Esc>F=hi
+	autocmd Filetype vimwiki inoremap <buffer> \i ![](<++>)<++><Esc>F[a
+	autocmd Filetype vimwiki inoremap <buffer> \ш ![](<++>)<++><Esc>F[a
+	autocmd Filetype vimwiki inoremap <buffer> \a [](<++>)<++><Esc>F[a
+	autocmd Filetype vimwiki inoremap <buffer> \ф [](<++>)<++><Esc>F[a
+	autocmd Filetype vimwiki inoremap <buffer> \1 #<Space><Enter><++><Esc>kA
+	autocmd Filetype vimwiki inoremap <buffer> \2 ##<Space><Enter><++><Esc>kA
+	autocmd Filetype vimwiki inoremap <buffer> \3 ###<Space><Enter><++><Esc>kA
+	autocmd Filetype vimwiki inoremap <buffer> \l --------<Enter>
+	autocmd Filetype vimwiki inoremap <buffer> \д --------<Enter>
+	autocmd Filetype vimwiki inoremap <buffer> \p <++>
+	autocmd Filetype vimwiki inoremap <buffer> \з <++>
 	" autocmd Filetype rmd inoremap ,r ```{r}<CR>```<CR><CR><esc>2kO
 	" autocmd Filetype rmd inoremap ,p ```{python}<CR>```<CR><CR><esc>2kO
 	" autocmd Filetype rmd inoremap ,c ```<cr>```<cr><cr><esc>2kO
@@ -755,32 +813,32 @@ colo gruvbox
 	au FileType wiki set tabstop=2 | set softtabstop=2 | set shiftwidth=2 | set textwidth=120 | set expandtab | set autoindent | set fileformat=unix
 	function! Wiki()
 		" INSERT MAPPINGS
-		inoremap ,1 =<Space>~<Space>=<Esc>F~cl
-		inoremap ,2 ==<Space>~<Space>==<Esc>F~cl
-		inoremap ,3 ===<Space>~<Space>===<Esc>F~cl
-		inoremap ,b *~*<Space><++><Esc>F~cl
-		inoremap ,i _~_<Space><++><Esc>F~cl
-		inoremap ,s ~~#~~<Space><++><Esc>F#cl
-		inoremap ,c `~`<Space><++><Esc>F~cl
-		inoremap ,d ~::<Space><++><Esc>F~cl
+		inoremap <buffer> ,1 =<Space>~<Space>=<Esc>F~cl
+		inoremap <buffer> ,2 ==<Space>~<Space>==<Esc>F~cl
+		inoremap <buffer> ,3 ===<Space>~<Space>===<Esc>F~cl
+		inoremap <buffer> ,b *~*<Space><++><Esc>F~cl
+		inoremap <buffer> ,i _~_<Space><++><Esc>F~cl
+		inoremap <buffer> ,s ~~#~~<Space><++><Esc>F#cl
+		inoremap <buffer> ,c `~`<Space><++><Esc>F~cl
+		inoremap <buffer> ,d ~::<Space><++><Esc>F~cl
 
 		" VISUAL MAPPINGS
-		vnoremap ,xb "zdi**<Left><C-o>"zP<Esc>
-		vnoremap ,xi "zdi__<Left><C-o>"zP<Esc>
-		vnoremap ,xc "zdi``<Left><C-o>"zP<Esc>
-		vnoremap ,xs "zdi~~~~<Left><Left><C-o>"zP<Esc>
-		vnoremap ,xp "zdi{{{<CR>}}}<Up><C-o>"zp<Esc>
+		vnoremap <buffer> ,xb "zdi**<Left><C-o>"zP<Esc>
+		vnoremap <buffer> ,xi "zdi__<Left><C-o>"zP<Esc>
+		vnoremap <buffer> ,xc "zdi``<Left><C-o>"zP<Esc>
+		vnoremap <buffer> ,xs "zdi~~~~<Left><Left><C-o>"zP<Esc>
+		vnoremap <buffer> ,xp "zdi{{{<CR>}}}<Up><C-o>"zp<Esc>
 
 		" NORMAL MAPPINGS
-		nnoremap ,xb "zdiwi**<Left><C-o>"zP<Esc>
-		nnoremap ,xi "zdiwi__<Left><C-o>"zP<Esc>
-		nnoremap ,xc "zdiwi``<Left><C-o>"zP<Esc>
-		nnoremap ,xs "zdiwi~~~~<Left><Left><C-o>"zP<Esc>
-		nnoremap ,hh i=<Space>~<Space>=<Esc>F~cl
-		nnoremap ,h2h i==<Space>~<Space>==<Esc>F~cl
-		nnoremap ,h3h i===<Space>~<Space>===<Esc>F~cl
-		nnoremap ,iu i*<Space>
-		nnoremap ,io i#<Space>
+		nnoremap <buffer> ,xb "zdiwi**<Left><C-o>"zP<Esc>
+		nnoremap <buffer> ,xi "zdiwi__<Left><C-o>"zP<Esc>
+		nnoremap <buffer> ,xc "zdiwi``<Left><C-o>"zP<Esc>
+		nnoremap <buffer> ,xs "zdiwi~~~~<Left><Left><C-o>"zP<Esc>
+		nnoremap <buffer> ,hh i=<Space>~<Space>=<Esc>F~cl
+		nnoremap <buffer> ,h2h i==<Space>~<Space>==<Esc>F~cl
+		nnoremap <buffer> ,h3h i===<Space>~<Space>===<Esc>F~cl
+		nnoremap <buffer> ,iu i*<Space>
+		nnoremap <buffer> ,io i#<Space>
 	endfunction
 	autocmd Filetype wiki call Wiki()
 
@@ -813,7 +871,7 @@ colo gruvbox
 	au BufNewFile,BufRead *.vue set tabstop=2 | set softtabstop=2 | set shiftwidth=2 | set textwidth=79 | set expandtab | set autoindent | set fileformat=unix
 
 """.hs
-	au BufNewFile,BufRead *.hs set tabstop=2 | set softtabstop=2 | set shiftwidth=2 | set textwidth=79 | set expandtab | set autoindent | set fileformat=unix
+	au BufNewFile,BufRead *.hs set tabstop=2 | set softtabstop=2 | set shiftwidth=2 | set textwidth=119 | set expandtab | set autoindent | set fileformat=unix
 
 """.elm
-	au BufNewFile,BufRead *.elm set tabstop=2 | set softtabstop=2 | set shiftwidth=2 | set textwidth=79 | set expandtab | set autoindent | set fileformat=unix
+	au BufNewFile,BufRead *.elm set tabstop=2 | set softtabstop=2 | set shiftwidth=2 | set textwidth=119 | set expandtab | set autoindent | set fileformat=unix
