@@ -74,6 +74,11 @@ endif
 call plug#begin('~/.config/nvim/plugged')
 " Visuals
 Plug 'mhinz/vim-startify'
+  autocmd BufEnter *
+         \ if !exists('t:startify_new_tab') && empty(expand('%')) && !exists('t:goyo_master') |
+         \   let t:startify_new_tab = 1 |
+         \   Startify |
+         \ endif
 Plug 'nikvdp/neomux'
 Plug 'shinchu/lightline-gruvbox.vim'
 Plug 'itchyny/lightline.vim'
