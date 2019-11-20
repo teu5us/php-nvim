@@ -475,10 +475,10 @@ nmap <leader>еа :Vexplore<CR>
 	nmap <leader>ыь :FzfMarks<CR>
 	nmap <leader>ac :FzfCommands<CR>
 	nmap <leader>фс :FzfCommands<CR>
-	nmap <leader>sb :FzfBuffers<CR>
-	nmap <leader>ыи :FzfBuffers<CR>
 	nmap <leader>st :tabs<CR>
 	nmap <leader>ые :tabs<CR>
+	nmap <leader>bb :FzfBuffers<CR>
+	nmap <leader>ии :FzfBuffers<CR>
 
 " Wrap toggles
 	nmap <leader>tw :set wrap<CR>
