@@ -300,7 +300,7 @@ Plug 'honza/vim-snippets'
 	" " ActivateAddons vim-snippets ultisinps
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 	" coc settings
-	let g:coc_global_extensions = ['coc-lists', 'coc-python', 'coc-tsserver', 'coc-html', 'coc-css', 'coc-json', 'coc-vetur', 'coc-texlab', 'coc-emmet', 'coc-snippets', 'coc-ultisnips']
+	let g:coc_global_extensions = ['coc-lists', 'coc-python', 'coc-tsserver', 'coc-html', 'coc-css', 'coc-json', 'coc-vetur', 'coc-vimtex', 'coc-emmet', 'coc-snippets', 'coc-ultisnips']
 	nmap <silent> <C-c> <Plug>(coc-cursors-position)
 	nmap <silent> <C-с> <Plug>(coc-cursors-position)
 	nmap <silent> <C-d> <Plug>(coc-cursors-word)*

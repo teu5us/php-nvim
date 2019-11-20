@@ -8,8 +8,6 @@
   "python.linting.enabled": true,
   "python.formatting.provider": "autopep8",
   "suggest.enablePreview": true,
-  "translator.toLang": "ru",
-  "translator.engines": [ "google", "bing" ],
   "emmet.includeLanguages": {"pug": "html"},
   "codeLens.enable":  true,
 
@@ -28,6 +26,7 @@
       ],
       "initializationOptions": {
         "languageServerHaskell": {
+          "hlintOn": true
         }
       }
     },
@@ -35,11 +34,12 @@
       "command": "elm-language-server",
       "filetypes": ["elm"],
       "rootPatterns": ["elm.json"],
+      "trace.server": "verbose",
       "initializationOptions": {
         "elmPath": "elm",
         "elmFormatPath": "elm-format",
         "elmTestPath": "elm-test",
-        "elmAnalyseTrigger": "never"
+        "elmAnalyseTrigger": "change"
       }
     }
   }
