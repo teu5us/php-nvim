@@ -475,8 +475,8 @@ nmap <leader>еа :Vexplore<CR>
 	nmap <leader>ыь :FzfMarks<CR>
 	nmap <leader>ac :FzfCommands<CR>
 	nmap <leader>фс :FzfCommands<CR>
-	nmap <leader>st :tabs<CR>
-	nmap <leader>ые :tabs<CR>
+	nmap <leader>bt :tabs<CR>:tabn<C-b>
+	nmap <leader>ие :tabs<CR>:tabn<C-b>
 	nmap <leader>bb :FzfBuffers<CR>
 	nmap <leader>ии :FzfBuffers<CR>
 
