@@ -48,6 +48,7 @@ set regexpengine=1
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 set termguicolors
 set t_Co=256
+set t_ut=
 set bg=dark
 set laststatus=2
 set cursorline
@@ -102,16 +103,19 @@ Plug 'NLKNguyen/papercolor-theme'
 	let g:PaperColor_Theme_Options = {
 	  \   'theme': {
 	  \     'default': {
-	  \       'transparent_background': 0,
+	  \       'transparent_background': 1,
     \       'allow_italic': 1,
     \       'allow_bold': 1
 	  \     }
 	  \   }
 	  \ }
+Plug 'tomasiser/vim-code-dark'
+  let g:codedark_term256=1
 Plug 'nathanaelkane/vim-indent-guides'
 	let g:indent_guides_enable_on_vim_startup = 1
 
 " Syntax
+Plug 'PotatoesMaster/i3-vim-syntax'
 Plug 'neovimhaskell/haskell-vim'
   let g:haskell_enable_quantification = 1   " to enable highlighting of `forall`
   let g:haskell_enable_recursivedo = 1      " to enable highlighting of `mdo` and `rec`
@@ -130,6 +134,8 @@ Plug 'chrisbra/Colorizer'
 	let g:colorizer_auto_color = 1
 	let g:colorizer_auto_filetype='css,scss,sass,html,pug,vue'
 Plug 'vimwiki/vimwiki'
+  let g:vimwiki_table_mappings = 0
+  let g:vimwiki_table_auto_fmt = 0
   " Ensure files are read as what I want:
 	let g:vimwiki_ext2syntax = {'.Rmd': 'markdown', '.rmd': 'markdown','.md': 'markdown', '.markdown': 'markdown', '.mdown': 'markdown'}
 	let g:vimwiki_list = [{'path': '~/vimwiki', 'syntax': 'markdown', 'ext': '.md'}]
@@ -224,14 +230,18 @@ Plug 'junegunn/vim-easy-align'
   nmap ga <Plug>(EasyAlign)
 Plug 'dhruvasagar/vim-table-mode'
 	" autocmd FileType markdown,rmd TableModeEnable
-	" let g:table_mode_corner_corner='+'
-	" let g:table_mode_corner = '+'
-	" let g:table_mode_header_fillchar='='
+	" autocmd FileType vimwiki TableModeEnable
+	let g:table_mode_corner_corner='|'
+	let g:table_mode_corner = '|'
+	let g:table_mode_header_fillchar='='
 Plug 'jsfaint/gen_tags.vim'
 Plug 'ludovicchabant/vim-gutentags'
 	let g:gutentags_enabled=0
 Plug 'moll/vim-bbye'
 Plug 'dense-analysis/ale'
+  let g:ale_set_loclist = 0
+  let g:ale_set_quickfix = 1
+  let g:ale_open_list = 0
   let g:ale_set_balloons = 1
   let g:ale_linter_aliases = {'vue': ['vue', 'javascript']}
   let g:ale_linters = {'vue': ['eslint', 'vls']}
@@ -312,7 +322,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 	" use normal command like `<leader>xi(`
 	nmap <leader>x  <Plug>(coc-cursors-operator)
 	nmap <leader>ч  <Plug>(coc-cursors-operator)
-	autocmd CursorHold * silent call CocActionAsync('highlight')
+	" autocmd CursorHold * silent call CocActionAsync('highlight')
 	" Use <C-l> for trigger snippet expand.
 	imap <C-l> <Plug>(coc-snippets-expand)
 	imap <C-д> <Plug>(coc-snippets-expand)
@@ -342,7 +352,8 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
 
 """ SET COLORSCHEME """
-colo PaperColor
+" colo PaperColor
+colo codedark
 
 let g:netrw_banner = 0
 let g:netrw_liststyle = 3
@@ -737,13 +748,58 @@ nmap <leader>еа :Vexplore<CR>
     inoremap <buffer> ,д --------<Enter>
     inoremap <buffer> ,p <++>
     inoremap <buffer> ,з <++>
+
     "
     " inoremap ,h ====<Space><++><Esc>F=hi
     " inoremap ,r ```{r}<CR>```<CR><CR><esc>2kO
     " inoremap ,p ```{python}<CR>```<CR><CR><esc>2kO
     " inoremap ,c ```<cr>```<cr><cr><esc>2kO
-  endfu
+    set nowrap
+    endfu
   au FileType vimwiki call MD()
+
+  func! OP()
+    inoremap <buffer> <leader>- <Left><Left><Left><Left>.<Left><Left><Left>.<Right><Right><Right><Right><Right><Right><Right>
+    inoremap <buffer> ўк копия
+    inoremap <buffer> ўюл ЕГРЮЛ
+    inoremap <buffer> ўЮЛ Единого государственного реестра юридических лиц
+    inoremap <buffer> ўсф Счет-фактура
+    inoremap <buffer> ўсврз Справка о стоимости выполненных работ и затрат
+    inoremap <buffer> ўдп Договор подряда
+    inoremap <buffer> ўдз Договор займа
+    inoremap <buffer> ўас Акт сверки
+    inoremap <buffer> ўапп Акт приема-передачи
+    inoremap <buffer> ўапвр Акт о приемке выполненных работ
+    inoremap <buffer> ўдог Договор
+    inoremap <buffer> ўдс Дополнительное соглашение
+    inoremap <buffer> ўпов Повестка о вызове на допрос свидетеля
+    inoremap <buffer> ўпрот Протокол
+    inoremap <buffer> ўпдс Протокол допроса свидетеля
+    inoremap <buffer> ўпас Паспорт
+    inoremap <buffer> ўсп Сопроводительное письмо
+    inoremap <buffer> ўопр Определение
+    inoremap <buffer> ўппв Постановление о производстве выимки, изъятии документов и предметов
+    inoremap <buffer> ўпрпв Протокол о производстве выимки, изъятии документов и предметов
+    inoremap <buffer> ўпос0 Протокол осмотра территорий, помещений, документов, предметов
+    inoremap <buffer> ўпнм Протокол рассмотрения материалов налоговой проверки
+    inoremap <buffer> ўтн Товарная накладная
+    inoremap <buffer> ўои Опись изъятых документов и предметов
+    inoremap <buffer> ўсо Счет на оплату
+    inoremap <buffer> ўтод Требование о предоставлении документов
+    inoremap <buffer> ўпп Платежное поручение
+    inoremap <buffer> ўау Акт об оказанных услугах
+    inoremap <buffer> ўонал Обращение налогоплательщика
+    inoremap <buffer> ўот Ответ на требование
+    inoremap <buffer> ўтур Табель учета рабочего времени
+    inoremap <buffer> ўппр Приказ о приеме работника на работу
+    inoremap <buffer> ўпптд Приказ о прекращении трудового договора с работником
+    inoremap <buffer> ўподс Поручение о допросе свидетелей
+    inoremap <buffer> ўундс Уведомление о невозможности допроса свидетеля и принятых мерах
+    inoremap <buffer> ўз Запрос
+    inoremap <buffer> ўоз Ответ на запрос
+    inoremap <buffer> ў3 03-25/
+  endfunc
+  com! OP call OP()
 
 "WIKI
 	autocmd BufEnter *.wiki set filetype=wiki
@@ -778,6 +834,9 @@ nmap <leader>еа :Vexplore<CR>
 		nnoremap <buffer> ,io i#<Space>
 	endfunction
 	autocmd Filetype wiki call Wiki()
+
+"Haskell
+  au BufEnter *.hs set foldmethod=marker | set foldmarker={{{,}}}
 
 """.xml
 	autocmd FileType xml inoremap ,e <item><Enter><title><++></title><Enter><guid<space>isPermaLink="false"><++></guid><Enter><pubDate><Esc>:put<Space>=strftime('%a, %d %b %Y %H:%M:%S %z')<Enter>kJA</pubDate><Enter><link><++></link><Enter><description><![CDATA[<++>]]></description><Enter></item><Esc>?<title><enter>cit
