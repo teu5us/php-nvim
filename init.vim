@@ -352,8 +352,8 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
 
 """ SET COLORSCHEME """
-" colo PaperColor
-colo codedark
+colo PaperColor
+" colo codedark
 
 let g:netrw_banner = 0
 let g:netrw_liststyle = 3
@@ -754,52 +754,8 @@ nmap <leader>еа :Vexplore<CR>
     " inoremap ,r ```{r}<CR>```<CR><CR><esc>2kO
     " inoremap ,p ```{python}<CR>```<CR><CR><esc>2kO
     " inoremap ,c ```<cr>```<cr><cr><esc>2kO
-    set nowrap
     endfu
   au FileType vimwiki call MD()
-
-  func! OP()
-    inoremap <buffer> <leader>- <Left><Left><Left><Left>.<Left><Left><Left>.<Right><Right><Right><Right><Right><Right><Right>
-    inoremap <buffer> ўк копия
-    inoremap <buffer> ўюл ЕГРЮЛ
-    inoremap <buffer> ўЮЛ Единого государственного реестра юридических лиц
-    inoremap <buffer> ўсф Счет-фактура
-    inoremap <buffer> ўсврз Справка о стоимости выполненных работ и затрат
-    inoremap <buffer> ўдп Договор подряда
-    inoremap <buffer> ўдз Договор займа
-    inoremap <buffer> ўас Акт сверки
-    inoremap <buffer> ўапп Акт приема-передачи
-    inoremap <buffer> ўапвр Акт о приемке выполненных работ
-    inoremap <buffer> ўдог Договор
-    inoremap <buffer> ўдс Дополнительное соглашение
-    inoremap <buffer> ўпов Повестка о вызове на допрос свидетеля
-    inoremap <buffer> ўпрот Протокол
-    inoremap <buffer> ўпдс Протокол допроса свидетеля
-    inoremap <buffer> ўпас Паспорт
-    inoremap <buffer> ўсп Сопроводительное письмо
-    inoremap <buffer> ўопр Определение
-    inoremap <buffer> ўппв Постановление о производстве выимки, изъятии документов и предметов
-    inoremap <buffer> ўпрпв Протокол о производстве выимки, изъятии документов и предметов
-    inoremap <buffer> ўпос0 Протокол осмотра территорий, помещений, документов, предметов
-    inoremap <buffer> ўпнм Протокол рассмотрения материалов налоговой проверки
-    inoremap <buffer> ўтн Товарная накладная
-    inoremap <buffer> ўои Опись изъятых документов и предметов
-    inoremap <buffer> ўсо Счет на оплату
-    inoremap <buffer> ўтод Требование о предоставлении документов
-    inoremap <buffer> ўпп Платежное поручение
-    inoremap <buffer> ўау Акт об оказанных услугах
-    inoremap <buffer> ўонал Обращение налогоплательщика
-    inoremap <buffer> ўот Ответ на требование
-    inoremap <buffer> ўтур Табель учета рабочего времени
-    inoremap <buffer> ўппр Приказ о приеме работника на работу
-    inoremap <buffer> ўпптд Приказ о прекращении трудового договора с работником
-    inoremap <buffer> ўподс Поручение о допросе свидетелей
-    inoremap <buffer> ўундс Уведомление о невозможности допроса свидетеля и принятых мерах
-    inoremap <buffer> ўз Запрос
-    inoremap <buffer> ўоз Ответ на запрос
-    inoremap <buffer> ў3 03-25/
-  endfunc
-  com! OP call OP()
 
 "WIKI
 	autocmd BufEnter *.wiki set filetype=wiki
