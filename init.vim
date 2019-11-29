@@ -105,6 +105,9 @@ Plug 'NLKNguyen/papercolor-theme'
 	  \ }
 Plug 'sainnhe/gruvbox-material'
   let g:gruvbox_material_background = 'soft'
+  let g:gruvbox_material_enable_bold = 1
+  let g:gruvbox_material_transparent_background = 1
+  let g:gruvbox_material_visual = 'red background'
 Plug 'nathanaelkane/vim-indent-guides'
 	let g:indent_guides_enable_on_vim_startup = 1
 
