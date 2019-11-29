@@ -81,10 +81,9 @@ Plug 'mhinz/vim-startify'
          \   Startify |
          \ endif
 Plug 'nikvdp/neomux'
-Plug 'shinchu/lightline-gruvbox.vim'
 Plug 'itchyny/lightline.vim'
 	let g:lightline = {
-			\ 'colorscheme' : 'PaperColor',
+			\ 'colorscheme' : 'gruvbox_material',
 			\ 'active' : {
 			\ 	'left' : [ [ 'mode', 'paste' ],
 			\		[ 'gitbranch', 'readonly', 'filename', 'modified', 'winnum' ] ]
@@ -94,11 +93,6 @@ Plug 'itchyny/lightline.vim'
       \ 'winnum' : 'WindowNumber'
 			\ },
 			\ }
-Plug 'morhetz/gruvbox'
-  let g:gruvbox_italic = 1
-  let g:gruvbox_termcolors = 256
-  let g:gruvbox_contrast_dark = 'hard'
-  let g:gruvbox_contrast_light = 'hard'
 Plug 'NLKNguyen/papercolor-theme'
 	let g:PaperColor_Theme_Options = {
 	  \   'theme': {
@@ -109,13 +103,12 @@ Plug 'NLKNguyen/papercolor-theme'
 	  \     }
 	  \   }
 	  \ }
-Plug 'tomasiser/vim-code-dark'
-  let g:codedark_term256=1
+Plug 'sainnhe/gruvbox-material'
+  let g:gruvbox_material_background = 'soft'
 Plug 'nathanaelkane/vim-indent-guides'
 	let g:indent_guides_enable_on_vim_startup = 1
 
 " Syntax
-Plug 'PotatoesMaster/i3-vim-syntax'
 Plug 'neovimhaskell/haskell-vim'
   let g:haskell_enable_quantification = 1   " to enable highlighting of `forall`
   let g:haskell_enable_recursivedo = 1      " to enable highlighting of `mdo` and `rec`
@@ -131,8 +124,9 @@ Plug 'posva/vim-vue'
     " let g:vue_pre_processors = []
   	let g:vue_pre_processors = 'detect_on_enter'
 Plug 'chrisbra/Colorizer'
-	let g:colorizer_auto_color = 1
-	let g:colorizer_auto_filetype='css,scss,sass,html,pug,vue'
+	" let g:colorizer_auto_color = 1
+	" let g:colorizer_auto_filetype='css,scss,sass,html,pug,vue,Xresources'
+  au BufEnter * ColorToggle
 Plug 'vimwiki/vimwiki'
   let g:vimwiki_table_mappings = 0
   let g:vimwiki_table_auto_fmt = 0
@@ -352,8 +346,8 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
 
 """ SET COLORSCHEME """
-colo PaperColor
-" colo codedark
+" colo PaperColor
+colo gruvbox-material
 
 let g:netrw_banner = 0
 let g:netrw_liststyle = 3
@@ -754,6 +748,7 @@ nmap <leader>еа :Vexplore<CR>
     " inoremap ,r ```{r}<CR>```<CR><CR><esc>2kO
     " inoremap ,p ```{python}<CR>```<CR><CR><esc>2kO
     " inoremap ,c ```<cr>```<cr><cr><esc>2kO
+    source ~/.config/nvim/OP.vim
     endfu
   au FileType vimwiki call MD()
 
