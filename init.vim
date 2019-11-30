@@ -92,6 +92,8 @@ Plug 'itchyny/lightline.vim'
 			\	'gitbranch' : 'fugitive#head',
       \ 'winnum' : 'WindowNumber'
 			\ },
+      \ 'separator': { 'left': "\ue0b0", 'right': "\ue0b2" },
+      \ 'subseparator': { 'left': "\ue0b1", 'right': "\ue0b3" }
 			\ }
 Plug 'NLKNguyen/papercolor-theme'
 	let g:PaperColor_Theme_Options = {
@@ -800,14 +802,14 @@ nmap <leader>еа :Vexplore<CR>
 	au BufNewFile,BufRead *.vim set tabstop=2 | set softtabstop=2 | set shiftwidth=2 | set textwidth=120 | set expandtab | set autoindent | set fileformat=unix
 
 """.py
-	au BufNewFile,BufRead *.py set tabstop=4 | set softtabstop=4 | set shiftwidth=4 | set textwidth=79 | set expandtab | set autoindent | set fileformat=unix
+	au BufNewFile,BufRead *.py set tabstop=4 | set softtabstop=4 | set shiftwidth=4 | set textwidth=80 | set expandtab | set autoindent | set fileformat=unix
 	let python_highlight_all=1
 
 """.js
-	au BufNewFile,BufRead *.js set tabstop=2 | set softtabstop=2 | set shiftwidth=2 | set textwidth=79 | set expandtab | set autoindent | set fileformat=unix
+	au BufNewFile,BufRead *.js set tabstop=2 | set softtabstop=2 | set shiftwidth=2 | set textwidth=80 | set expandtab | set autoindent | set fileformat=unix
 
 """.json
-	au BufNewFile,BufRead *.json set tabstop=2 | set softtabstop=2 | set shiftwidth=2 | set textwidth=79 | set expandtab | set autoindent | set fileformat=unix
+	au BufNewFile,BufRead *.json set tabstop=2 | set softtabstop=2 | set shiftwidth=2 | set textwidth=80 | set expandtab | set autoindent | set fileformat=unix
 
 """.pug
 	autocmd BufEnter *.pug set filetype=pug
@@ -818,7 +820,7 @@ nmap <leader>еа :Vexplore<CR>
 
 """ .vue
 	autocmd BufEnter *.vue set filetype=vue
-	au BufNewFile,BufRead *.vue set tabstop=2 | set softtabstop=2 | set shiftwidth=2 | set textwidth=79 | set expandtab | set autoindent | set fileformat=unix
+	au BufNewFile,BufRead *.vue set tabstop=2 | set softtabstop=2 | set shiftwidth=2 | set textwidth=80 | set expandtab | set autoindent | set fileformat=unix
 
 """.hs
 	au BufNewFile,BufRead *.hs set tabstop=2 | set softtabstop=2 | set shiftwidth=2 | set textwidth=119 | set expandtab | set autoindent | set fileformat=unix
