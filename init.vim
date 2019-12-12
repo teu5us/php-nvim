@@ -109,7 +109,7 @@ Plug 'sainnhe/gruvbox-material'
   let g:gruvbox_material_background = 'soft'
   let g:gruvbox_material_enable_bold = 1
   let g:gruvbox_material_transparent_background = 1
-  let g:gruvbox_material_visual = 'red background'
+  let g:gruvbox_material_visual = 'green background'
 Plug 'nathanaelkane/vim-indent-guides'
 	let g:indent_guides_enable_on_vim_startup = 1
 
@@ -131,7 +131,7 @@ Plug 'posva/vim-vue'
 Plug 'chrisbra/Colorizer'
 	" let g:colorizer_auto_color = 1
 	" let g:colorizer_auto_filetype='css,scss,sass,html,pug,vue,Xresources'
-  au BufEnter * ColorToggle
+  nmap <leader>tC :ColorToggle<CR>
 Plug 'vimwiki/vimwiki'
   let g:vimwiki_table_mappings = 0
   let g:vimwiki_table_auto_fmt = 0
@@ -211,7 +211,7 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-capslock'
 Plug 'tpope/vim-unimpaired'
-Plug 'jiangmiao/auto-pairs'
+" Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-abolish'
 Plug 'majutsushi/tagbar'
 	nmap <F8> :TagbarToggle<CR>
@@ -227,6 +227,9 @@ Plug 'tpope/vim-fugitive'
 Plug 'junegunn/vim-easy-align'
   xmap ga <Plug>(EasyAlign)
   nmap ga <Plug>(EasyAlign)
+Plug 'godlygeek/tabular'
+  " xmap ga :Tabularize<space>/
+  " nmap ga :Tabularize<space>/
 Plug 'dhruvasagar/vim-table-mode'
 	" autocmd FileType markdown,rmd TableModeEnable
 	" autocmd FileType vimwiki TableModeEnable
@@ -309,7 +312,9 @@ Plug 'honza/vim-snippets'
 	" " ActivateAddons vim-snippets ultisinps
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 	" coc settings
-	let g:coc_global_extensions = ['coc-lists', 'coc-python', 'coc-tsserver', 'coc-html', 'coc-css', 'coc-json', 'coc-vetur', 'coc-vimtex', 'coc-emmet', 'coc-snippets', 'coc-ultisnips']
+	let g:coc_global_extensions = ['coc-pairs', 'coc-lists', 'coc-python', 'coc-tsserver', 'coc-html', 'coc-css', 'coc-json', 'coc-vetur', 'coc-vimtex', 'coc-emmet', 'coc-snippets', 'coc-ultisnips']
+	inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+				\: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 	nmap <silent> <C-c> <Plug>(coc-cursors-position)
 	nmap <silent> <C-с> <Plug>(coc-cursors-position)
 	nmap <silent> <C-d> <Plug>(coc-cursors-word)*
@@ -337,17 +342,58 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 	" Use <C-j> for both expand and jump (make expand higher priority.)
 	imap <C-j> <Plug>(coc-snippets-expand-jump)
 	imap <C-о> <Plug>(coc-snippets-expand-jump)
-	" coc-translator
-	" popup
-	map <Leader>t <Plug>(coc-translator-p)
-	map <Leader>е <Plug>(coc-translator-p)
-	" echo
-	map <Leader>e <Plug>(coc-translator-e)
-	map <Leader>у <Plug>(coc-translator-e)
-	" replace
-	map <Leader>r <Plug>(coc-translator-r)
-	map <Leader>к <Plug>(coc-translator-r)
-	" coc settings
+	"" Use `[g` and `]g` to navigate diagnostics
+  nmap <silent> [g <Plug>(coc-diagnostic-prev)
+  nmap <silent> ]g <Plug>(coc-diagnostic-next) coc settings
+" Remap keys for gotos
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+" Use K to show documentation in preview window
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+" Remap for rename current word
+nmap <leader>rn <Plug>(coc-rename)
+" Remap for format selected region
+xmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
+augroup mygroup
+  autocmd!
+  " Setup formatexpr specified filetype(s).
+  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  " Update signature help on jump placeholder
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+  augroup end
+  " Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
+  xmap <leader>ca  <Plug>(coc-codeaction-selected)
+  nmap <leader>ca  <Plug>(coc-codeaction-selected)
+  " Remap for do codeAction of current line
+  nmap <leader>ac  <Plug>(coc-codeaction)
+  " Fix autofix problem of current line
+  nmap <leader>fc  <Plug>(coc-fix-current)
+  " Create mappings for function text object, requires document symbols feature of languageserver.
+  xmap if <Plug>(coc-funcobj-i)
+  xmap af <Plug>(coc-funcobj-a)
+  omap if <Plug>(coc-funcobj-i)
+  omap af <Plug>(coc-funcobj-a)
+  " Use <C-d> for select selections ranges, needs server support, like: coc-tsserver, coc-python
+  nmap <silent> <C-d> <Plug>(coc-range-select)
+  xmap <silent> <C-d> <Plug>(coc-range-select)
+  " Use `:Format` to format current buffer
+  command! -nargs=0 Format :call CocAction('format')
+  " Use `:Fold` to fold current buffer
+  command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+  " use `:OR` for organize import of current buffer
+  command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
+  " Add status line support, for integration with other plugin, checkout `:h coc-status`
+  set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 call plug#end()
 
 """ SET COLORSCHEME """
@@ -792,7 +838,7 @@ nmap <leader>еа :Vexplore<CR>
 	autocmd Filetype wiki call Wiki()
 
 "Haskell
-  au BufEnter *.hs set foldmethod=marker | set foldmarker={{{,}}}
+  au BufEnter *.hs setlocal foldmethod=marker | set foldmarker={{{,}}}
 
 """.xml
 	autocmd FileType xml inoremap ,e <item><Enter><title><++></title><Enter><guid<space>isPermaLink="false"><++></guid><Enter><pubDate><Esc>:put<Space>=strftime('%a, %d %b %Y %H:%M:%S %z')<Enter>kJA</pubDate><Enter><link><++></link><Enter><description><![CDATA[<++>]]></description><Enter></item><Esc>?<title><enter>cit
@@ -804,6 +850,7 @@ nmap <leader>еа :Vexplore<CR>
 """.py
 	au BufNewFile,BufRead *.py set tabstop=4 | set softtabstop=4 | set shiftwidth=4 | set textwidth=80 | set expandtab | set autoindent | set fileformat=unix
 	let python_highlight_all=1
+  au BufEnter *.py map <buffer> <leader>rr :!python <C-r>%<CR>
 
 """.js
 	au BufNewFile,BufRead *.js set tabstop=2 | set softtabstop=2 | set shiftwidth=2 | set textwidth=80 | set expandtab | set autoindent | set fileformat=unix
@@ -823,7 +870,7 @@ nmap <leader>еа :Vexplore<CR>
 	au BufNewFile,BufRead *.vue set tabstop=2 | set softtabstop=2 | set shiftwidth=2 | set textwidth=80 | set expandtab | set autoindent | set fileformat=unix
 
 """.hs
-	au BufNewFile,BufRead *.hs set tabstop=2 | set softtabstop=2 | set shiftwidth=2 | set textwidth=119 | set expandtab | set autoindent | set fileformat=unix
+	au BufNewFile,BufRead *.hs set tabstop=2 | set softtabstop=2 | set shiftwidth=2 | set textwidth=120 | set expandtab | set autoindent | set fileformat=unix
 
 """.elm
 	au BufNewFile,BufRead *.elm set tabstop=2 | set softtabstop=2 | set shiftwidth=2 | set textwidth=119 | set expandtab | set autoindent | set fileformat=unix
