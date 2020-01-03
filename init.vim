@@ -3,23 +3,45 @@ let maplocalleader ="-"
 set guicursor=
 let $VTE_VERSION="100"
 
-" function! SetKeyMap()
-" if system("setxkbmap -query | awk '/^variant/ {print $2}'") == "altgr-intl,\n"
-"   set keymap=russian-jcukenwin
-" elseif system("setxkbmap -query | awk '/^variant/ {print $2}'") == "dvorak-alt-intl,\n"
-"   set keymap=russian-dvorak
-" endif
-" endfunction
+" Set keymap
+  nnoremap <C-z> /<C-^><C-c>
+  vnoremap <C-z> /<C-^><C-c>
+  inoremap <C-z> <C-^>
+  cmap <C-z> <C-^>
+  inoremap <C-x>, «
+  inoremap <C-x>. »
+  inoremap <C-x>9 [
+  inoremap <C-x>0 ]
+  inoremap <C-x>( {
+  inoremap <C-x>) }
+  inoremap <C-\> /
+  function! SetKeyMap()
+    if system("setxkbmap -query | awk '/^variant/ {print $2}'") == "altgr-intl,ruu\n"
+      set keymap=russian-jcukenwin
+    elseif system("setxkbmap -query | awk '/^variant/ {print $2}'") == "dvorak-alt-intl,ruu\n"
+      set keymap=ru-dvorak
+    else
+      set keymap=russian-jcukenmac
+    endif
+  endfunction
+  call SetKeyMap()
+  set iminsert=0
+  set imsearch=-1
 
-" call SetKeyMap()
-
-" nnoremap <C-z> /<C-^><C-c>
-" vnoremap <C-z> /<C-^><C-c>
-" inoremap <C-z> <C-^>
-" cmap <C-z> <C-^>
-" set ttimeoutlen=50
-" set iminsert=0
-" set imsearch=-1
+command! -complete=file -nargs=* Tabe call Tabe(<f-args>)
+function! Tabe(...)
+  let t = tabpagenr()
+  let i = 0
+  for f in a:000
+    for g in glob(f, 0, 1)
+      exe "tabe " . fnameescape(g)
+      let i = i + 1
+    endfor
+  endfor
+  if i
+    exe "tabn " . (t + 1)
+  endif
+endfunction
 
 " Some basics:
 	nnoremap c "_c
@@ -82,15 +104,23 @@ Plug 'mhinz/vim-startify'
          \ endif
 Plug 'nikvdp/neomux'
 Plug 'itchyny/lightline.vim'
+  fun! KM()
+    if &iminsert
+      return b:keymap_name
+    else
+      return 'us'
+  endfu
+  com! KM call KM()
 	let g:lightline = {
 			\ 'colorscheme' : 'gruvbox_material',
 			\ 'active' : {
-			\ 	'left' : [ [ 'mode', 'paste' ],
+			\ 	'left' : [ [ 'mode', 'keymap', 'paste' ],
 			\		[ 'gitbranch', 'readonly', 'filename', 'modified', 'winnum' ] ]
 			\ },
 			\ 'component_function' : {
 			\	'gitbranch' : 'fugitive#head',
-      \ 'winnum' : 'WindowNumber'
+      \ 'winnum' : 'WindowNumber',
+      \ 'keymap' : 'KM'
 			\ },
       \ 'separator': { 'left': "\ue0b0", 'right': "\ue0b2" },
       \ 'subseparator': { 'left': "\ue0b1", 'right': "\ue0b3" }
@@ -109,7 +139,7 @@ Plug 'sainnhe/gruvbox-material'
   let g:gruvbox_material_background = 'soft'
   let g:gruvbox_material_enable_bold = 1
   let g:gruvbox_material_transparent_background = 1
-  let g:gruvbox_material_visual = 'green background'
+  let g:gruvbox_material_visual = 'red background'
 Plug 'nathanaelkane/vim-indent-guides'
 	let g:indent_guides_enable_on_vim_startup = 1
 
@@ -188,9 +218,6 @@ Plug 'lervag/vimtex'
         \ 'context (luatex)' : '-pdf -pdflatex=context',
         \ 'context (xetex)'  : '-pdf -pdflatex=''texexec --xtx''',
         \}
-
-" Movement
-Plug 'Teu5us/vim-plugin-ruscmd'
 
 " Else
 Plug 'roxma/vim-hug-neovim-rpc'
@@ -427,17 +454,17 @@ nmap <leader>еа :Vexplore<CR>
   map яу z=
   map gh <Nop>
 
-  " enable emacs-style line navigation in insert mode
-  inoremap <C-f> <Right>
-  inoremap <C-b> <Left>
-  inoremap <C-p> <Up>
-  noremap <C-n> <Down>
-  inoremap <C-o> <C-[>ea
-  inoremap <C-u> <C-[>gea
-  inoremap <C-e> <C-[>A
-  inoremap <C-a> <C-[>I
-  inoremap <C-q> <C-[>(i
-  inoremap <C-k> <Right><C-[>)i
+  " " enable emacs-style line navigation in insert mode
+  " inoremap <C-f> <Right>
+  " inoremap <C-b> <Left>
+  " inoremap <C-p> <Up>
+  " noremap <C-n> <Down>
+  " inoremap <C-o> <C-[>ea
+  " inoremap <C-u> <C-[>gea
+  " inoremap <C-e> <C-[>A
+  " inoremap <C-a> <C-[>I
+  " inoremap <C-q> <C-[>(i
+  " inoremap <C-k> <Right><C-[>)i
 
 " Dictionary
 	vmap <leader>xx y:silent !goldendict "<C-r>0" &<CR>
@@ -476,10 +503,10 @@ nmap <leader>еа :Vexplore<CR>
 	nmap <leader>ае :tabe<space>
 
 " New bufs/tabs
-	nmap <leader>w2 :vnew<space><CR>
-	nmap <leader>ц2 :vnew<space><CR>
-	nmap <leader>w3 :new<space><CR>
-	nmap <leader>ц3 :new<space><CR>
+	nmap <leader>w2 :new<space><CR>
+	nmap <leader>ц2 :new<space><CR>
+	nmap <leader>w3 :vnew<space><CR>
+	nmap <leader>ц3 :vnew<space><CR>
 	nmap <leader>w5 :tabnew<space><CR>
 	nmap <leader>ц5 :tabnew<space><CR>
 
@@ -540,6 +567,8 @@ nmap <leader>еа :Vexplore<CR>
 	nmap <leader>ие :tabs<CR>:tabn<C-b>
 	nmap <leader>bb :FzfBuffers<CR>
 	nmap <leader>ии :FzfBuffers<CR>
+	nmap <leader>: :FzfCommands<CR>
+	nmap <leader>Ж :FzfCommands<CR>
 
 " Wrap toggles
 	nmap <leader>tw :set wrap<CR>
@@ -633,13 +662,16 @@ nmap <leader>еа :Vexplore<CR>
 	map <leader>фз :!opout <c-r>%<CR><CR>
 
 " Navigating with guides
-	inoremap <leader><Tab> <Esc>/<++><Enter>"_c4l
+	inoremap <leader><Tab> <Esc><Esc>/<++><Enter>"_c4l
 	vnoremap <leader><Tab> <Esc>/<++><Enter>"_c4l
 	map <leader><Tab> <Esc>/<++><Enter>"_c4l
 
-	inoremap <leader>^ <Esc>/<+-><Enter>"_c4l
-	vnoremap <leader>^ <Esc>/<+-><Enter>"_c4l
-	map <leader>^ <Esc>/<+-><Enter>"_c4l
+function! AltLeader()
+	inoremap <leader>/ <Esc>/<+-><Enter>"_c4l
+	vnoremap <leader>/ <Esc>/<+-><Enter>"_c4l
+	map <leader>/ <Esc>/<+-><Enter>"_c4l
+endfunction
+com! AltLeader call AltLeader()
 
 " " Copy selected text to system clipboard (requires gvim/nvim/vim-x11 installed):
 " 	vnoremap <C-c> "+y
@@ -799,7 +831,6 @@ nmap <leader>еа :Vexplore<CR>
     " inoremap ,r ```{r}<CR>```<CR><CR><esc>2kO
     " inoremap ,p ```{python}<CR>```<CR><CR><esc>2kO
     " inoremap ,c ```<cr>```<cr><cr><esc>2kO
-    source ~/.config/nvim/OP.vim
     endfu
   au FileType vimwiki call MD()
 
