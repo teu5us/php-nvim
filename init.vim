@@ -114,8 +114,11 @@ Plug 'itchyny/lightline.vim'
 	let g:lightline = {
 			\ 'colorscheme' : 'gruvbox_material',
 			\ 'active' : {
-			\ 	'left' : [ [ 'mode', 'keymap', 'paste' ],
-			\		[ 'gitbranch', 'readonly', 'filename', 'modified', 'winnum' ] ]
+			\ 	'left' : [ [ 'mode', 'paste' ],
+			\		[ 'gitbranch', 'readonly', 'filename', 'modified', 'winnum' ] ],
+		  \   'right': [ [ 'lineinfo' ],
+		  \              [ 'keymap', 'percent' ],
+		  \              [ 'fileformat', 'fileencoding', 'filetype' ] ]
 			\ },
 			\ 'component_function' : {
 			\	'gitbranch' : 'fugitive#head',
@@ -831,6 +834,7 @@ com! AltLeader call AltLeader()
     " inoremap ,r ```{r}<CR>```<CR><CR><esc>2kO
     " inoremap ,p ```{python}<CR>```<CR><CR><esc>2kO
     " inoremap ,c ```<cr>```<cr><cr><esc>2kO
+    source ~/.config/nvim/OP.vim
     endfu
   au FileType vimwiki call MD()
 
