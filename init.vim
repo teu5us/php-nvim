@@ -6,14 +6,16 @@ let $VTE_VERSION="100"
 " Set keymap
   nnoremap <C-z> /<C-^><C-c>
   vnoremap <C-z> /<C-^><C-c>
+  lnoremap <C-z> <C-^>
   inoremap <C-z> <C-^>
-  cmap <C-z> <C-^>
-  inoremap <C-x>, «
-  inoremap <C-x>. »
-  inoremap <C-x>9 [
-  inoremap <C-x>0 ]
-  inoremap <C-x>( {
-  inoremap <C-x>) }
+  cnoremap <C-z> <C-^>
+  onoremap <C-z> <C-^>
+  " inoremap <C-x>, «
+  " inoremap <C-x>. »
+  " inoremap <C-x>9 [
+  " inoremap <C-x>0 ]
+  " inoremap <C-x>( {
+  " inoremap <C-x>) }
   inoremap <C-\> /
   function! SetKeyMap()
     if system("setxkbmap -query | awk '/^variant/ {print $2}'") == "altgr-intl,ruu\n"
@@ -85,7 +87,7 @@ set dictionary+=/usr/share/dict/ru
 set noshowmode
 set noswapfile
 set completeopt+=preview
-set title titlelen=0 titlestring=%<%F%=%(\ %)\|%(\ %)%l/%L-%P
+set title titlelen=0 titlestring=%{KM()}%(\ %)%<%F%=%(\ %)\|%(\ %)%l/%L-%P
 " set title titlestring=%<%F%= titlelen=0
 
 if ! filereadable(expand('~/.config/nvim/autoload/plug.vim'))
@@ -95,6 +97,11 @@ if ! filereadable(expand('~/.config/nvim/autoload/plug.vim'))
 endif
 
 call plug#begin('~/.config/nvim/plugged')
+Plug 'justinmk/vim-dirvish'
+Plug 'justinmk/vim-sneak'
+  let g:sneak#label = 0
+  " Write a function returning a set of symbols according to the value of &iminsert
+  " let g:sneak#target_labels = SetOfSymbols()
 " Visuals
 Plug 'mhinz/vim-startify'
   autocmd BufEnter *
@@ -257,9 +264,6 @@ Plug 'tpope/vim-fugitive'
 Plug 'junegunn/vim-easy-align'
   xmap ga <Plug>(EasyAlign)
   nmap ga <Plug>(EasyAlign)
-Plug 'godlygeek/tabular'
-  " xmap ga :Tabularize<space>/
-  " nmap ga :Tabularize<space>/
 Plug 'dhruvasagar/vim-table-mode'
 	" autocmd FileType markdown,rmd TableModeEnable
 	" autocmd FileType vimwiki TableModeEnable
