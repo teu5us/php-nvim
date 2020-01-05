@@ -11,12 +11,6 @@ let $VTE_VERSION="100"
   inoremap <C-z> <C-^>
   cnoremap <C-z> <C-^>
   onoremap <C-z> <C-^>
-  " inoremap <C-x>, «
-  " inoremap <C-x>. »
-  " inoremap <C-x>9 [
-  " inoremap <C-x>0 ]
-  " inoremap <C-x>( {
-  " inoremap <C-x>) }
   inoremap <C-\> /
   function! SetKeyMap()
     if system("setxkbmap -query | awk '/^variant/ {print $2}'") == "altgr-intl,ruu\n"
@@ -120,7 +114,7 @@ Plug 'itchyny/lightline.vim'
   endfu
   com! KM call KM()
 	let g:lightline = {
-			\ 'colorscheme' : 'gruvbox_material',
+			\ 'colorscheme' : 'onedark',
 			\ 'active' : {
 			\ 	'left' : [ [ 'mode', 'paste' ],
 			\		[ 'gitbranch', 'readonly', 'filename', 'modified', 'winnum' ] ],
@@ -151,6 +145,10 @@ Plug 'sainnhe/gruvbox-material'
   let g:gruvbox_material_enable_bold = 1
   let g:gruvbox_material_transparent_background = 1
   let g:gruvbox_material_visual = 'red background'
+Plug 'joshdick/onedark.vim'
+  let g:onedark_hide_endofbuffer = 1
+  let g:onedark_termcolors = 256
+  let g:onedark_terminal_italics = 1
 Plug 'nathanaelkane/vim-indent-guides'
 	let g:indent_guides_enable_on_vim_startup = 1
 
@@ -433,7 +431,15 @@ call plug#end()
 
 """ SET COLORSCHEME """
 " colo PaperColor
-colo gruvbox-material
+" colo gruvbox-material
+if (has("autocmd") && !has("gui_running"))
+  augroup colorset
+    autocmd!
+    let s:white = { "gui": "#ABB2BF", "cterm": "145", "cterm16" : "7" }
+    autocmd ColorScheme * call onedark#set_highlight("Normal", { "fg": s:white }) " `bg` will not be styled since there is no `bg` setting
+  augroup END
+endif
+colo onedark
 
 let g:netrw_banner = 0
 let g:netrw_liststyle = 3
@@ -675,9 +681,9 @@ nmap <leader>еа :Vexplore<CR>
 	map <leader><Tab> <Esc>/<++><Enter>"_c4l
 
 function! AltLeader()
-	inoremap <leader>/ <Esc>/<+-><Enter>"_c4l
-	vnoremap <leader>/ <Esc>/<+-><Enter>"_c4l
-	map <leader>/ <Esc>/<+-><Enter>"_c4l
+	inoremap <leader>' <Esc>/<+-><Enter>"_c4l
+	vnoremap <leader>' <Esc>/<+-><Enter>"_c4l
+	map <leader>' <Esc>/<+-><Enter>"_c4l
 endfunction
 com! AltLeader call AltLeader()
 
