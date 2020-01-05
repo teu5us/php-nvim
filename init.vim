@@ -4,6 +4,7 @@ set guicursor=
 let $VTE_VERSION="100"
 
 " Set keymap
+  au FocusGained * call system("xkb-switch -s 'us-my(dvorak-alt-intl)'")
   nnoremap <C-z> /<C-^><C-c>
   vnoremap <C-z> /<C-^><C-c>
   lnoremap <C-z> <C-^>
